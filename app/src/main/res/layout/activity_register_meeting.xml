@@ -1,0 +1,93 @@
+<!-- activity_register_meetings.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/registerMeetingsPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center_vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="251dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="-60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
+        app:srcCompat="@drawable/logopsp" />
+
+    <TextView
+        android:id="@+id/textViewAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/montserrat_medium"
+        android:layout_marginTop="-10dp"
+        android:layout_marginBottom="-15dp"
+        android:text="Add New Meeting"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/editTextMeetingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_rounded_bg"
+        android:hint="Meeting Title"
+        android:layout_marginTop="32dp"
+        android:layout_below="@id/textViewAdd"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editTextMeetingDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextMeetingTitle"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:hint="Meeting Date"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editTextMeetingTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextMeetingDate"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:hint="Meeting Time"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editTextParticipants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextMeetingTime"
+        android:layout_marginTop="16dp"
+        android:hint="Meeting Participants"
+        android:background="@drawable/edittext_rounded_bg"
+        android:inputType="text"
+        android:focusable="false"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/buttonAddMeeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextParticipants"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_rounded_bg"
+        android:text="ADD MEETING"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</RelativeLayout>

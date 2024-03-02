@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#424242</color>
+    <color name="colorAccent">#CCCCCC</color> <!-- Off-white color -->
+    <color name="darkBackground">#222222</color>
+    <color name="lightPurple">#CA86F3</color>
+    <color name="lightPurpleHint">#CCCCCC</color>
+</resources>

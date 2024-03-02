@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921457261942",
+    "project_id": "imeetpsp",
+    "storage_bucket": "imeetpsp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921457261942:android:2d9ae7bfa263fc75f90e57",
+        "android_client_info": {
+          "package_name": "com.james.imeetpsp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhWvxxJtsRNfte3P102CkaYcsw0l_H6lQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

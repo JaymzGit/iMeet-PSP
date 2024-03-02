@@ -1,0 +1,12 @@
+<!-- res/drawable/round_button.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#CBAA8D"/>
+        </shape>
+    </item>
+    <!-- Plus sign -->
+    <item android:drawable="@drawable/baseline_add_24"
+        android:gravity="center"/>
+</layer-list>
