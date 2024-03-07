@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                             // Check if the current user is the organizer or a participant of the meeting
                             if (meeting.getOrganiser() != null && meeting.getOrganiser().equals(currentUserEmail)) {
                                 upcomingMeetingsList.add(meeting);
+                            } else if (meeting.getParticipants() != null && meeting.getParticipants().contains(currentUserEmail)) {
+                                upcomingMeetingsList.add(meeting);
                             }
                         }
 

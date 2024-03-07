@@ -8,17 +8,28 @@ public class Meeting {
     private String date;
     private String time;
     private String status;
+    private ArrayList<String> participants; // Add field for participants
 
     public Meeting() {
         // Empty constructor required for Firebase
     }
 
-    public Meeting(String title, String date, String time, String organiser, String meetingId) {
+    public Meeting(String title, String date, String time, String organiser, String status) {
         this.title = title;
         this.date = date;
         this.time = time;
         this.organiser = organiser;
         this.status = status;
+        this.participants = new ArrayList<>(); // Initialize participants list
+    }
+
+    // Getter and setter methods for participants
+    public ArrayList<String> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(ArrayList<String> participants) {
+        this.participants = participants;
     }
 
     public String getTitle() {

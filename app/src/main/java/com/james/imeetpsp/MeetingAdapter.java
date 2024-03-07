@@ -77,7 +77,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                     bundle.putString("time", meeting.getTime());
                     bundle.putString("organizer", meeting.getOrganiser());
                     bundle.putString("status", meeting.getStatus());
-//                    bundle.putString("participants", meeting.getParticipants());
+                    bundle.putStringArrayList("participants", meeting.getParticipants());
 
                     intent.putExtras(bundle);
 
