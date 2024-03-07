@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom DatePickerDialog Theme -->
+    <style name="CustomDatePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">#CBAA8D</item>
+    </style>
+
+    <!-- Custom TimePickerDialog Theme -->
+    <style name="CustomTimePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">#CBAA8D</item>
+    </style>
+</resources>

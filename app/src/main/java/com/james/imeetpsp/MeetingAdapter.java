@@ -1,7 +1,8 @@
 package com.james.imeetpsp;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -11,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.List;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
@@ -50,6 +48,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     static class MeetingViewHolder extends RecyclerView.ViewHolder {
         ImageView ivOrganiser, imageViewEdit;
         TextView tvMeetingTitle, tvMeetingDate, tvMeetingTime, tvOrganiser, tvDetails, tvStatus;
+        Meeting meeting; // Declare the meeting variable
 
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
@@ -64,10 +63,33 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             tvOrganiser = itemView.findViewById(R.id.textViewMeetingOrganiser);
             tvStatus = itemView.findViewById(R.id.textViewMeetingStatus);
             tvDetails = itemView.findViewById(R.id.textViewDetails);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create an Intent object
+                    Intent intent = new Intent(itemView.getContext(), MeetingDetails.class);
+
+                    // Put data into the intent using a Bundle
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", meeting.getTitle());
+                    bundle.putString("date", meeting.getDate());
+                    bundle.putString("time", meeting.getTime());
+                    bundle.putString("organizer", meeting.getOrganiser());
+                    bundle.putString("status", meeting.getStatus());
+//                    bundle.putString("participants", meeting.getParticipants());
+
+                    intent.putExtras(bundle);
+
+                    // Start the activity from the context of the itemView
+                    itemView.getContext().startActivity(intent);
+                }
+            });
         }
 
         @SuppressLint("SetTextI18n")
         public void bind(Meeting meeting) {
+            this.meeting = meeting;
             FirebaseFirestore fStore = FirebaseFirestore.getInstance();
 
             // Get the organizer's email address from the meeting object
@@ -114,22 +136,25 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             // Set the meeting status text
             String statusText = " Status: " + meeting.getStatus();
 
-            // Create a SpannableString to apply color only to the status text
-            SpannableString spannableString = new SpannableString(statusText);
-
-            // Calculate the index range for the status text
-            int statusStartIndex = statusText.indexOf(meeting.getStatus());
-            int statusEndIndex = statusStartIndex + meeting.getStatus().length();
-
             // Check if the meeting status is "Ended"
             if (meeting.getStatus().equals("Ended")) {
+                // Create a SpannableString to apply color only to the status text
+                SpannableString spannableString = new SpannableString(statusText);
+
+                // Calculate the index range for the status text
+                int statusStartIndex = statusText.indexOf(meeting.getStatus());
+                int statusEndIndex = statusStartIndex + meeting.getStatus().length();
+
                 // Change the text color to red for the status text
                 spannableString.setSpan(new ForegroundColorSpan(itemView.getContext().getResources().getColor(android.R.color.holo_red_light)),
                         statusStartIndex, statusEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
 
-            // Set the SpannableString to the TextView
-            tvStatus.setText(spannableString);
+                // Set the SpannableString to the TextView
+                tvStatus.setText(spannableString);
+            } else {
+                // Set the status text without color
+                tvStatus.setText(statusText);
+            }
 
             // Check if the current user is the organizer of the meeting
             if (organizerEmail.equals(currentUserEmail)) {

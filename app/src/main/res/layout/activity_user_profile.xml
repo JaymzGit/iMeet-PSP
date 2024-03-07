@@ -19,7 +19,7 @@
         android:src="@drawable/default_image" /> ->
 
     <TextView
-        android:id="@+id/textViewName"
+        android:id="@+id/textViewParticipantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,10 +32,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewEmail"
+        android:id="@+id/textViewParticipantEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewName"
+        android:layout_below="@id/textViewParticipantName"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"
@@ -47,7 +47,7 @@
         android:id="@+id/textViewPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewEmail"
+        android:layout_below="@id/textViewParticipantEmail"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"

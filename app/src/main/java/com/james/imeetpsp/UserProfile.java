@@ -22,12 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class UserProfile extends AppCompatActivity {
     TextView fname, email, phone, textViewNoMeetings;
@@ -64,8 +59,8 @@ public class UserProfile extends AppCompatActivity {
 
         textViewNoMeetings = findViewById(R.id.textViewNoMeetings);
 
-        fname = findViewById(R.id.textViewName);
-        email = findViewById(R.id.textViewEmail);
+        fname = findViewById(R.id.textViewParticipantName);
+        email = findViewById(R.id.textViewParticipantEmail);
         phone = findViewById(R.id.textViewPhoneNumber);
         profileImage = findViewById(R.id.imageViewProfile);
         rvPastMeetings = findViewById(R.id.rvPastMeetings);

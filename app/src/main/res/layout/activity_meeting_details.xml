@@ -1,0 +1,182 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meetingDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="200dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/logopsp" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Meeting Title:"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/baseline_calendar_today_24"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=" Meeting Date:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDate"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/baseline_access_time_filled_24"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=" Meeting Time:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewOrganiser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTime"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/baseline_manage_accounts_24"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=" Organised by:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutOrganiser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewStatus"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imageViewOrganiser"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/circle_background"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/imageViewOrganiser"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewOrganiserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="John Doe"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewOrganiserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="john.doe@example.com"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOrganiser"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/baseline_cached_24"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=" Status:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Are you attending? Section -->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutAttending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutOrganiser"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true"> <!-- Center the RelativeLayout horizontally -->
+
+        <TextView
+            android:id="@+id/textViewAreYouAttending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Are you attending?"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" /> <!-- Center text horizontally and align it to the top -->
+
+        <LinearLayout
+            android:id="@+id/attendanceButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewAreYouAttending"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"> <!-- Center buttons horizontally and align them below the text -->
+
+            <Button
+                android:id="@+id/buttonYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#619A42"
+                android:text="Yes"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#B64545"
+                android:text="No"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btnViewParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutAttending"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="View Participants"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3F51B5"
+        android:visibility="invisible" />
+</RelativeLayout>

@@ -1,7 +1,5 @@
 package com.james.imeetpsp;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -29,24 +27,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class EditProfile extends AppCompatActivity {
     EditText etEmail, etFullName, etPhone, etPass;
@@ -87,8 +80,8 @@ public class EditProfile extends AppCompatActivity {
 
         userID = fAuth.getCurrentUser().getUid();
 
-        tvfname = findViewById(R.id.textViewName);
-        tvemail = findViewById(R.id.textViewEmail);
+        tvfname = findViewById(R.id.textViewParticipantName);
+        tvemail = findViewById(R.id.textViewParticipantEmail);
         tvphone = findViewById(R.id.textViewPhoneNumber);
 
         profileImage = findViewById(R.id.imageViewProfile);
