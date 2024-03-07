@@ -129,34 +129,52 @@ public class RegisterMeeting extends AppCompatActivity {
         ArrayList<String> selectedParticipants = getSharedPreferencesData();
 
         if (!selectedParticipants.isEmpty()) {
-            Map<String, Object> meetingData = new HashMap<>();
-            meetingData.put("title", title);
-            meetingData.put("date", date);
-            meetingData.put("time", time);
-            meetingData.put("status", "Upcoming");
-
             // Get the current user's email (organiser)
             String organiserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            meetingData.put("organiser", organiserEmail);
-            meetingData.put("participants", selectedParticipants);
 
-            // Add meeting data to Firestore
+            // Query Firestore to check if the current user has already registered a meeting with the same title
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("meetings")
-                    .add(meetingData)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(RegisterMeeting.this, "Meeting added successfully", Toast.LENGTH_SHORT).show();
-                        // Clear input fields
-                        etTitle.setText("");
-                        etDate.setText("");
-                        etTime.setText("");
-                        etParticipants.setText("");
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
-                        Log.e("Firestore", "Error adding document", e);
+                    .whereEqualTo("organiser", organiserEmail)
+                    .whereEqualTo("title", title)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // If there's no existing meeting with the same title, add the new meeting
+                            if (task.getResult().isEmpty()) {
+                                Map<String, Object> meetingData = new HashMap<>();
+                                meetingData.put("title", title);
+                                meetingData.put("date", date);
+                                meetingData.put("time", time);
+                                meetingData.put("status", "Upcoming");
+                                meetingData.put("organiser", organiserEmail);
+                                meetingData.put("participants", selectedParticipants);
+
+                                // Add meeting data to Firestore
+                                db.collection("meetings")
+                                        .add(meetingData)
+                                        .addOnSuccessListener(documentReference -> {
+                                            Toast.makeText(RegisterMeeting.this, "Meeting added successfully", Toast.LENGTH_SHORT).show();
+                                            // Clear input fields
+                                            etTitle.setText("");
+                                            etDate.setText("");
+                                            etTime.setText("");
+                                            etParticipants.setText("");
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
+                                            Log.e("Firestore", "Error adding document", e);
+                                        });
+                            } else {
+                                // A meeting with the same title exists
+                                Toast.makeText(RegisterMeeting.this, "A meeting with the same title has already been registered by you", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Log.e("Firestore", "Error getting documents: ", task.getException());
+                            Toast.makeText(RegisterMeeting.this, "Error checking for existing meetings", Toast.LENGTH_SHORT).show();
+                        }
                     });
-        }else {
+        } else {
             Toast.makeText(RegisterMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
         }
 
