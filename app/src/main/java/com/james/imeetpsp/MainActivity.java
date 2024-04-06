@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         Log.d("Firestore", "No documents found.");
+                        textViewNoMeetings.setVisibility(View.VISIBLE);
                     }
                 });
     }

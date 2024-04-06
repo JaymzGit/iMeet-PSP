@@ -136,6 +136,7 @@ public class UserProfile extends AppCompatActivity {
                         }
                     } else {
                         Log.d("Firestore", "No documents found.");
+                        textViewNoMeetings.setVisibility(View.VISIBLE);
                     }
                 });
     }
