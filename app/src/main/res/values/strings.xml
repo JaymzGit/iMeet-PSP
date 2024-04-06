@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">iMeet PSP</string>
     <string name="details"><u>Click for more details..</u></string>
+
+    <string-array name="reasons_array">
+        <item>Leave of absence</item>
+        <item>Sick leave</item>
+        <item>Attending course/seminar</item>
+        <item>In another meeting</item>
+        <item>Haji/umrah</item>
+        <!-- Add more reasons if needed -->
+    </string-array>
 </resources>
