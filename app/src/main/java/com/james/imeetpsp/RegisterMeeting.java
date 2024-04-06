@@ -160,6 +160,7 @@ public class RegisterMeeting extends AppCompatActivity {
                                             etDate.setText("");
                                             etTime.setText("");
                                             etParticipants.setText("");
+                                            clearSharedPreferencesData();
                                         })
                                         .addOnFailureListener(e -> {
                                             Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
@@ -177,8 +178,6 @@ public class RegisterMeeting extends AppCompatActivity {
         } else {
             Toast.makeText(RegisterMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
         }
-
-        clearSharedPreferencesData();
     }
 
     // Method to show DatePickerDialog
