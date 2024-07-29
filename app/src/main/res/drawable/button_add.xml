@@ -7,6 +7,6 @@
         </shape>
     </item>
     <!-- Plus sign -->
-    <item android:drawable="@drawable/baseline_add_24"
+    <item android:drawable="@drawable/vector_plus_24"
         android:gravity="center"/>
 </layer-list>
