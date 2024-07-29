@@ -4,20 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="0dp">
 
-    <!-- Attendance checkbox -->
+    <!-- Participant details -->
     <CheckBox
         android:id="@+id/checkBoxAttendance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:buttonTint="@color/colorPrimary"
+        android:buttonTint="#FFFFFF"
         android:checked="false"
         android:gravity="center"
-        android:paddingStart="8dp" />
+        android:paddingStart="0dp" />
 
-    <!-- Participant details -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,9 +28,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_rounded_bg"
+            android:background="@drawable/button_secondary"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageViewProfilePicture"
@@ -41,7 +40,7 @@
                 android:background="@drawable/circle_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_image" />
+                android:src="@drawable/default_user_image" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -71,10 +70,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_person_24"
+                        android:drawableStart="@drawable/vector_person_18"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="Name"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -88,10 +87,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_email_24"
+                        android:drawableStart="@drawable/vector_email_18"
                         android:fontFamily="@font/montserrat_medium"
                         android:text=" E-Mail"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </LinearLayout>
 

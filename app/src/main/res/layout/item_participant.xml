@@ -27,7 +27,7 @@
             android:background="@drawable/circle_background"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_image" />
+            android:src="@drawable/default_user_image" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawableStart="@drawable/vector_person_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text="Name"
                     android:textColor="#FFFFFF"
@@ -74,7 +74,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_email_24"
+                    android:drawableStart="@drawable/vector_email_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" E-Mail"
                     android:textColor="#FFFFFF"

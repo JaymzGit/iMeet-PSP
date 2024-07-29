@@ -1,35 +1,53 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/registerPage"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center_vertical"
+    android:background="@drawable/app_background"
     android:padding="16dp">
+
+    <!-- Back button to navigate back to main screen -->
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_outline"
+        android:contentDescription="Back"
+        android:padding="8dp"
+        android:src="@drawable/vector_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/imageViewProfile"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/circle_background"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_image" /> ->
+        android:src="@drawable/default_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        tools:layout_editor_absoluteX="3dp" />
 
     <TextView
         android:id="@+id/textViewParticipantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat_medium"
         android:text="John Doe"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        tools:layout_editor_absoluteY="88dp" />
 
     <TextView
         android:id="@+id/textViewParticipantEmail"
@@ -41,7 +59,9 @@
         android:fontFamily="@font/montserrat"
         android:text="john.doe@example.com"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantName" />
 
     <TextView
         android:id="@+id/textViewPhoneNumber"
@@ -53,75 +73,115 @@
         android:fontFamily="@font/montserrat"
         android:text="+60123456789"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantEmail" />
 
-    <Button
-        android:id="@+id/buttonEditProfile"
-        android:layout_width="wrap_content"
+    <!-- View Participants and Edit Meeting Buttons Layout -->
+
+    <!-- Separate linear layout for divider with "Or Login with" text -->
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPhoneNumber"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" >
+
+        <!-- Edit Meeting Button -->
+        <Button
+            android:id="@+id/btnEditMeeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/button_primary"
+            android:drawableStart="@drawable/vector_edit_24"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text=" Edit Profile"
+            android:textColor="#FFFFFF" />
+
+        <!-- View Participants Button -->
+        <Button
+            android:id="@+id/btnViewParticipants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_danger"
+            android:drawableStart="@drawable/vector_delete_24"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="DELETE ACCOUNT"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
-        android:background="@drawable/button_rounded_bg"
-        android:fontFamily="@font/montserrat_medium"
-        android:onClick="editProfile"
-        android:padding="0dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Edit Profile"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"
+        app:layout_constraintVertical_bias="0.003">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#A59586" />
+    </LinearLayout>
+
+    <!-- Wrap RecyclerView and TextView within a RelativeLayout -->
 
     <TextView
         android:id="@+id/textViewPastMeetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonEditProfile"
+        android:layout_below="@id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="264dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Past Meetings"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
-
-    <!-- Wrap RecyclerView and TextView within a RelativeLayout -->
-    <RelativeLayout
-        android:id="@+id/pastMeetings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPastMeetings">
-
-        <!-- RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPastMeetings"
-            android:layout_width="match_parent"
-            android:layout_height="406dp" />
-
-        <!-- No meetings found TextView -->
-        <TextView
-            android:id="@+id/textViewNoMeetings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/montserrat"
-            android:text="No past meetings found"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:visibility="gone" />
-    </RelativeLayout>
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="126dp" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pastMeetings"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_logout"
+        android:layout_below="@id/rvPastMeetings"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_danger"
         android:fontFamily="@font/montserrat_medium"
         android:onClick="logout"
         android:text="Logout"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPastMeetings"
+        android:layout_width="379dp"
+        android:layout_height="339dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="0dp"
+        android:layout_above="@+id/buttonLogout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPastMeetings"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

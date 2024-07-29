@@ -1,4 +1,4 @@
-<!-- activity_edit_profile.xml -->
+<!-- activity_edit_meeting.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,7 +9,7 @@
     android:background="@drawable/app_background"
     android:padding="16dp">
 
-    <!-- Back button to navigate back to main screen -->
+    <!-- Back button to navigate back to MeetingDetails -->
     <ImageButton
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
@@ -23,94 +23,95 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
-        android:id="@+id/imageViewProfile"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/imageViewLogo"
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/circle_background"
-        android:clipToOutline="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_user_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBack"
-        tools:layout_editor_absoluteX="3dp" />
+        app:srcCompat="@drawable/app_heading" />
 
-    <ImageView
-        android:id="@+id/imageEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/imageViewProfile"
-        android:layout_alignEnd="@id/imageViewProfile"
-        android:src="@drawable/vector_edit_brown"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="72dp" />
-
+    <!-- Activity title -->
     <TextView
-        android:id="@+id/textViewParticipantName"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvEditMeeting"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="John Doe"
+        android:gravity="center"
+        android:text="Edit Meeting"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        tools:layout_editor_absoluteY="88dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        tools:ignore="HardcodedText"
+        tools:layout_editor_absoluteX="16dp" />
 
-    <TextView
-        android:id="@+id/textViewParticipantEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantName"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
-        android:fontFamily="@font/montserrat"
-        android:text="john.doe@example.com"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantName" />
-
-    <TextView
-        android:id="@+id/textViewPhoneNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantEmail"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
-        android:fontFamily="@font/montserrat"
-        android:text="+60123456789"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantEmail" />
-
+    <!-- EditText for user to enter/change the Meeting Name/Title -->
     <EditText
-        android:id="@+id/etFullName"
+        android:id="@+id/etMeetingTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your full name"
+        android:hint="Enter the meeting title"
         android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEditMeeting" />
 
+    <!-- EditText which triggers a pop-up for users to select the date -->
     <EditText
-        android:id="@+id/etPasswordConfirmation"
+        android:id="@+id/etMeetingDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your password for confirmation"
+        android:hint="Click to enter the meeting date"
+        android:inputType="textEmailAddress"
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMeetingTitle" />
+
+    <!-- EditText which triggers a pop-up for users to select the time -->
+    <EditText
+        android:id="@+id/etMeetingTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:fontFamily="@font/montserrat"
+        android:hint="Click to enter the meeting time"
+        android:inputType="phone"
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMeetingDate" />
+
+    <!-- EditText which triggers a pop-up for user to select participants from a list of all users -->
+    <EditText
+        android:id="@+id/etAddParticipants"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:fontFamily="@font/montserrat"
+        android:hint="Click to select meeting participants"
         android:inputType="textPassword"
         android:padding="14dp"
         android:textSize="16sp"
@@ -118,50 +119,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/etMeetingTime"
         app:layout_constraintVertical_bias="0.0" />
 
-    <!-- EditText for user to enter their password of choice -->
-    <EditText
-        android:id="@+id/editText60"
-        android:layout_width="wrap_content"
+    <!-- Button to submit the form and update the meeting -->
+    <Button
+        android:id="@+id/btnUpdateMeeting"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etEmailAddress"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:inputType="numberSigned"
-        android:padding="14dp"
-        android:textSize="16sp"
-        android:text="+60 |"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="180dp"
+        android:background="@drawable/button_primary"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="UPDATE MEETING"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
+        app:layout_constraintTop_toBottomOf="@+id/etAddParticipants"
+        app:layout_constraintVertical_bias="0.026" />
 
-    <EditText
-        android:id="@+id/etPhoneNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:hint="Enter your phone number"
-        android:inputType="phone"
-        android:padding="14dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
-
+    <!-- Hidden progress bar/loading to indicate login function is in progress to the user when login button is pressed -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
         android:textColor="#FFFFFF"
@@ -169,22 +154,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirmation"
+        app:layout_constraintTop_toBottomOf="@+id/etAddParticipants"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!-- Button to delete the meeting from the database, triggers a pop-up confirmation before deleting -->
     <Button
-        android:id="@+id/buttonUpdate"
+        android:id="@+id/btnDeleteMeeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_primary"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/button_danger"
         android:fontFamily="@font/montserrat_medium"
-        android:text="UPDATE DETAILS"
+        android:text="DELETE MEETING"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirmation" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

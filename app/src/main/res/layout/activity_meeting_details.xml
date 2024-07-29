@@ -1,34 +1,53 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- activity_meeting_details.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center_vertical"
+    android:background="@drawable/app_background"
     android:padding="16dp">
 
-    <!-- ImageView Logo -->
+    <!-- Back button to navigate back to MeetingDetails -->
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_outline"
+        android:contentDescription="Back"
+        android:padding="8dp"
+        android:src="@drawable/vector_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="200dp"
         android:layout_height="82dp"
-        android:layout_marginTop="0dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/logopsp" />
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:srcCompat="@drawable/app_heading" />
 
-    <!-- TextView Upcoming -->
+    <!-- Activity title -->
     <TextView
         android:id="@+id/textViewDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/imageViewLogo"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Meeting Details"
         android:textColor="#FFFFFF"
-        android:textSize="22sp" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <!-- Meeting Details CardView -->
     <androidx.cardview.widget.CardView
@@ -36,22 +55,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewDetails"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetails">
 
         <!-- Meeting Details Layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="#CBAA8D"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="14dp">
 
             <!-- Meeting Title -->
             <TextView
                 android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Meeting Title"
@@ -62,9 +85,10 @@
             <!-- Meeting Date -->
             <TextView
                 android:id="@+id/textViewDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_calendar_today_24"
+                android:layout_marginBottom="2dp"
+                android:drawableStart="@drawable/vector_calendar_18"
                 android:fontFamily="@font/montserrat_medium"
                 android:text=" Meeting Date:"
                 android:textColor="#FFFFFF" />
@@ -72,9 +96,10 @@
             <!-- Meeting Time -->
             <TextView
                 android:id="@+id/textViewTime"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_access_time_filled_24"
+                android:layout_marginBottom="2dp"
+                android:drawableStart="@drawable/vector_clock_18"
                 android:fontFamily="@font/montserrat_medium"
                 android:text=" Meeting Time:"
                 android:textColor="#FFFFFF" />
@@ -85,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <!-- Organizer Image -->
                 <ImageView
@@ -96,20 +121,20 @@
                     android:background="@drawable/circle_background"
                     android:clipToOutline="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/default_image" />
+                    android:src="@drawable/default_user_image" />
 
                 <!-- Name and Email Details -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="8dp"
-                    android:gravity="center_vertical">
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <!-- Organizer Name -->
                     <TextView
                         android:id="@+id/textViewOrganizerName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="Organizer Name"
@@ -119,7 +144,7 @@
                     <!-- Organizer Email -->
                     <TextView
                         android:id="@+id/textViewOrganizerEmail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
                         android:text="Organizer Email"
@@ -127,28 +152,52 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <!-- Meeting Status -->
             <TextView
                 android:id="@+id/textViewStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_cached_24"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/vector_reload_18"
                 android:fontFamily="@font/montserrat_medium"
                 android:text=" Status:"
                 android:textColor="#FFFFFF" />
 
-            <!-- View Participants Button -->
-            <Button
-                android:id="@+id/btnViewParticipants"
-                android:layout_width="wrap_content"
+            <!-- View Participants and Edit Meeting Buttons Layout -->
+            <LinearLayout
+                android:id="@+id/buttonsLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_participants"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:textColor="#FFFFFF"
-                android:text="View Participants" />
+                android:layout_below="@id/meetingDetailsCardView"
+                android:orientation="horizontal">
+
+                <!-- Edit Meeting Button -->
+                <Button
+                    android:id="@+id/btnEditMeeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/button_primary"
+                    android:drawableStart="@drawable/vector_edit_24"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text=" Edit Meeting"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
+
+                <!-- View Participants Button -->
+                <Button
+                    android:id="@+id/btnViewParticipants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_primary"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="View Participants"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -158,8 +207,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/meetingDetailsCardView"
+        android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meetingDetailsCardView">
 
         <!-- Attendance Layout -->
         <LinearLayout
@@ -167,13 +220,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#CBAA8D"
-            android:padding="16dp">
+            android:padding="14dp">
 
             <!-- Are you attending? Text -->
             <TextView
                 android:id="@+id/textViewAreYouAttending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Are you attending?"
                 android:textColor="#FFFFFF" />
@@ -183,7 +237,8 @@
                 android:id="@+id/radioGroupAttendance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginLeft="-5dp">
 
                 <RadioButton
                     android:id="@+id/radioButtonYes"
@@ -208,25 +263,33 @@
                     android:textColorHint="#FFFFFF" />
             </RadioGroup>
 
-            <!-- Dropdown for No -->
+            <!-- Spinner for No option -->
             <Spinner
                 android:id="@+id/spinnerReason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="#FFFFFF"
                 android:visibility="gone"
-                android:textColor="#FFFFFF" />
+                android:layout_marginLeft="-5dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <!-- Submit/Confirm Button -->
+
+    <!-- Button for users to submit their attendance -->
     <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnUpdateAttendance"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_logout"
-        android:text="Submit"
-        android:textColor="#FFFFFF" />
-</RelativeLayout>
+        android:background="@drawable/button_primary"
+        android:text="UPDATE ATTENDANCE"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

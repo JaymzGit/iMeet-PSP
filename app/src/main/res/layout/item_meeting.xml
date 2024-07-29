@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginBottom="12dp"
     android:background="#FFFFFF"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
+    app:cardElevation="4dp"
     tools:layout_editor_absoluteX="16dp"
     tools:layout_editor_absoluteY="16dp">
 
@@ -16,9 +16,9 @@
         android:layout_height="wrap_content"
         android:background="#CBAA8D"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="12dp">
 
-        <!-- Place imageViewOrganiser on the left -->
+        <!-- Meeting Organiser Profile Picture -->
         <ImageView
             android:id="@+id/imageViewOrganiser"
             android:layout_width="60dp"
@@ -27,7 +27,7 @@
             android:background="@drawable/circle_background"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_image" />
+            android:src="@drawable/default_user_image" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -36,6 +36,7 @@
             android:orientation="vertical"
             android:paddingStart="16dp">
 
+            <!-- Meeting Title -->
             <TextView
                 android:id="@+id/textViewMeetingTitle"
                 android:layout_width="wrap_content"
@@ -52,13 +53,13 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <!-- TextViews for Date and Time -->
+                <!-- Meeting Date -->
                 <TextView
                     android:id="@+id/textViewMeetingDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_calendar_today_24"
+                    android:drawableStart="@drawable/vector_calendar_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" Meeting Date:"
                     android:textColor="#FFFFFF"
@@ -70,12 +71,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- Meeting Time -->
                 <TextView
                     android:id="@+id/textViewMeetingTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_access_time_filled_24"
+                    android:drawableStart="@drawable/vector_clock_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" Meeting Time:"
                     android:textColor="#FFFFFF"
@@ -87,12 +89,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- Meeting Organiser -->
                 <TextView
                     android:id="@+id/textViewMeetingOrganiser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_manage_accounts_24"
+                    android:drawableStart="@drawable/vector_account_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" Organised by:"
                     android:textColor="#FFFFFF"
@@ -109,7 +112,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_cached_24"
+                    android:drawableStart="@drawable/vector_reload_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" Status:"
                     android:textColor="#FFFFFF"
@@ -142,7 +145,7 @@
             android:layout_gravity="top|end"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:src="@drawable/baseline_edit_24_2" />
+            android:src="@drawable/vector_edit_24" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

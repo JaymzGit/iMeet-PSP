@@ -1,148 +1,279 @@
-<!-- activity_register.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/registerPage"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center_vertical"
+    android:background="@drawable/app_background"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="287dp"
-        android:layout_height="98dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="46dp"
-        app:srcCompat="@drawable/logopsp" />
-
-    <TextView
-        android:id="@+id/textViewRegister"
+    <!-- Back button to navigate back to main screen -->
+    <ImageButton
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-10dp"
-        android:layout_marginBottom="-15dp"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Create New Account"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_outline"
+        android:contentDescription="Back"
+        android:padding="8dp"
+        android:src="@drawable/vector_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
-    <EditText
-        android:id="@+id/editTextEmailAddress"
-        android:layout_width="match_parent"
+    <!-- "Hello! Register" text view -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewRegister"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:padding="12dp" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextEmailAddress"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="Hello! Register to get started with iMeet PSP!"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        tools:ignore="HardcodedText" />
+
+    <!-- EditText for user's Full Name -->
+    <EditText
+        android:id="@+id/etFullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Full Name"
-        android:inputType="textPersonName"
-        android:padding="12dp" />
+        android:hint="Enter your full name"
+        android:inputType="textEmailAddress"
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
+    <!-- EditText for Email Address -->
+    <EditText
+        android:id="@+id/etEmailAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter your email address"
+        android:inputType="textEmailAddress"
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
+
+    <!-- EditText to lock the phone number to +60 -->
+
+    <!-- EditText for Phone Number -->
+
+    <!-- EditText for user to enter their password of choice -->
     <EditText
         android:id="@+id/editText60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextName"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/etEmailAddress"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
         android:inputType="numberSigned"
-        android:padding="12dp"
-        android:text="+60 |" />
+        android:padding="14dp"
+        android:textSize="16sp"
+        android:text="+60 |"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailAddress" />
 
     <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="match_parent"
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextName"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Phone Number"
-        android:ems="10"
-        android:inputType="numberSigned"
-        android:padding="12dp" />
+        android:hint="Enter your phone number"
+        android:inputType="phone"
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailAddress" />
 
     <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
+        android:id="@+id/etPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextNumber"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Password"
+        android:hint="Enter your password"
         android:inputType="textPassword"
-        android:padding="12dp" />
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
+
+    <!-- EditText for user to re-enter their password of choice for confirmation -->
+
+    <!-- Register button -->
 
     <EditText
-        android:id="@+id/editTextConfirm"
-        android:layout_width="match_parent"
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Confirm Password"
+        android:hint="Confirm your password"
         android:inputType="textPassword"
-        android:padding="12dp" />
+        android:padding="14dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <FrameLayout
-        android:id="@+id/registerFrameLayout"
+    <Button
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextConfirm"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="180dp"
+        android:background="@drawable/button_primary"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="REGISTER"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
+        app:layout_constraintVertical_bias="0.055" />
 
-        <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="match_parent"
+    <!-- Hidden progress bar/loading to indicate register function is in progress to the user when register button is pressed -->
+
+    <!-- Separate linear layout for divider with "Or Register with" text -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="180dp"
+        android:background="@drawable/button_primary"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/registerOptions"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_rounded_bg"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="SIGN UP"
+            android:fontFamily="@font/montserrat"
+            android:padding="8dp"
+            android:text="Or Register with"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminateTint="#FFFFFF"
-            android:background="@drawable/button_rounded_bg"
-            android:visibility="invisible" />
-    </FrameLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF" />
+    </LinearLayout>
 
+    <!-- Sign in with Google button -->
     <TextView
-        android:id="@+id/textViewLoginLink"
+        android:id="@+id/signInWithGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/button_white"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Register with Google"
+        android:textColor="#616161"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Google logo positioned next to the "Sign in with Google" text -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="34dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="280dp"
+        app:layout_constraintBottom_toBottomOf="@+id/signInWithGoogle"
+        app:layout_constraintEnd_toEndOf="@+id/signInWithGoogle"
+        app:layout_constraintTop_toTopOf="@+id/signInWithGoogle"
+        app:layout_constraintVertical_bias="0.421"
+        app:srcCompat="@drawable/google_icon" />
+
+    <!-- TextView for "Don't have an account?" that redirects the user to Register page -->
+    <TextView
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/registerFrameLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Already have an account? Login here!"
+        android:fontFamily="@font/montserrat"
+        android:padding="8dp"
+        android:text="Already have an account? Login Now"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

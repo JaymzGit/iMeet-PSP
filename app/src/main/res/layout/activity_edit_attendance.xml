@@ -1,46 +1,91 @@
-<!-- activity_select_participants.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- activity_edit_attendance.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/editAttendancePage"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/app_background"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewTitle"
+    <!-- Back button to navigate back to MeetingDetails -->
+    <ImageButton
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_outline"
+        android:contentDescription="Back"
+        android:padding="8dp"
+        android:src="@drawable/vector_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <!-- EditText to filter participants in the meeting -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_rounded_bg"
+        android:drawableLeft="@drawable/vector_search_24"
+        android:drawablePadding="10dp"
+        android:hint="Search"
+        android:maxLines="1"
+        android:padding="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        tools:ignore="HardcodedText" />
+
+    <!-- TextView to display total participants, and their attendance status -->
+    <TextView
+        android:id="@+id/textViewTotalParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Meeting Attendance"
+        android:text="Total Participants - 0 | Attending - 0 | Absenting - 0"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearch" />
 
-    <EditText
-        android:id="@+id/editTextSearch"
-        android:layout_width="match_parent"
+    <!-- Separate linear layout for divider with "Or Login with" text -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/search_view"
-        android:hint="Search"
-        android:padding="12dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:maxLines="1" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTotalParticipants"
+        app:layout_constraintVertical_bias="0.003">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#A59586" />
+    </LinearLayout>
+
+    <!-- Recycler view which shows cards of participants in the meeting -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewParticipantAttendance"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/editTextSearch"
-        android:layout_marginStart="12dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp" />
-
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
