@@ -207,7 +207,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/meetingDetailsCardView"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -218,8 +218,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="#CBAA8D"
+            android:orientation="vertical"
             android:padding="14dp">
 
             <!-- Are you attending? Text -->
@@ -237,29 +237,29 @@
                 android:id="@+id/radioGroupAttendance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="-5dp">
+                android:layout_marginLeft="-5dp"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radioButtonYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#FFFFFF"
                     android:fontFamily="@font/montserrat"
                     android:text="Yes"
                     android:textColor="#FFFFFF"
                     android:textColorHighlight="#FFFFFF"
-                    android:buttonTint="#FFFFFF"
                     android:textColorHint="#FFFFFF" />
 
                 <RadioButton
                     android:id="@+id/radioButtonNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#FFFFFF"
                     android:fontFamily="@font/montserrat"
                     android:text="No"
                     android:textColor="#FFFFFF"
                     android:textColorHighlight="#FFFFFF"
-                    android:buttonTint="#FFFFFF"
                     android:textColorHint="#FFFFFF" />
             </RadioGroup>
 
@@ -268,11 +268,11 @@
                 android:id="@+id/spinnerReason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/montserrat"
                 android:textColor="#FFFFFF"
-                android:visibility="gone"
-                android:layout_marginLeft="-5dp" />
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
