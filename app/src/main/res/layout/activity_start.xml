@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_heading" />
 
-    <!-- App Name -->
+    <!-- TextView to display app name -->
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
 
     <!-- Vector/Icon -->
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ivHomeScreen"
         android:layout_width="322dp"
         android:layout_height="341dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,12 +51,9 @@
         app:layout_constraintVertical_bias="0.427"
         app:srcCompat="@drawable/app_homescreen_image" />
 
-    <!-- Login Button -->
-
-    <!-- Sign Up Button -->
-
+    <!-- Login button to allow existing users to log in -->
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -68,12 +65,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/ivHomeScreen"
         app:layout_constraintVertical_bias="0.145"
         tools:ignore="HardcodedText" />
 
+    <!-- Sign Up button to allow new users to register an account -->
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -85,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 

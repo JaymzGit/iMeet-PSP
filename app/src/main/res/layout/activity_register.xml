@@ -11,7 +11,7 @@
 
     <!-- Back button to navigate back to main screen -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         tools:ignore="HardcodedText" />
 
     <!-- EditText for user's Full Name -->
@@ -77,12 +77,8 @@
         app:layout_constraintTop_toBottomOf="@+id/etFullName" />
 
     <!-- EditText to lock the phone number to +60 -->
-
-    <!-- EditText for Phone Number -->
-
-    <!-- EditText for user to enter their password of choice -->
     <EditText
-        android:id="@+id/editText60"
+        android:id="@+id/et60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etEmailAddress"
@@ -99,6 +95,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmailAddress" />
 
+    <!-- EditText for Phone Number -->
     <EditText
         android:id="@+id/etPhoneNumber"
         android:layout_width="0dp"
@@ -116,44 +113,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmailAddress" />
 
-    <EditText
-        android:id="@+id/etPassword"
+    <!-- app:hintEnabled removes floating hint only, not all hints -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PasswordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:hint="Enter your password"
-        android:inputType="textPassword"
-        android:padding="14dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
-
-    <!-- EditText for user to re-enter their password of choice for confirmation -->
-
-    <!-- Register button -->
-
-    <EditText
-        android:id="@+id/etConfirmPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:hint="Confirm your password"
-        android:inputType="textPassword"
-        android:padding="14dp"
-        android:textSize="16sp"
+        app:hintEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber"
+        app:layout_constraintVertical_bias="0.004">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_bg"
+            android:fontFamily="@font/montserrat"
+            android:hint="Create your password"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- app:hintEnabled removes floating hint only, not all hints -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PasswordLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout"
+        app:layout_constraintVertical_bias="0.004">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_bg"
+            android:fontFamily="@font/montserrat"
+            android:hint="Confirm your password"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Register button -->
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
@@ -168,12 +181,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout2"
         app:layout_constraintVertical_bias="0.055" />
 
     <!-- Hidden progress bar/loading to indicate register function is in progress to the user when register button is pressed -->
-
-    <!-- Separate linear layout for divider with "Or Register with" text -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
@@ -183,13 +194,18 @@
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
         android:textColor="#FFFFFF"
+        android:progressTint="@android:color/white"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout2"
         app:layout_constraintVertical_bias="0.055" />
 
+    <!-- Separate linear layout for divider with "Or Register with" text -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -233,7 +249,7 @@
 
     <!-- Sign in with Google button -->
     <TextView
-        android:id="@+id/signInWithGoogle"
+        android:id="@+id/registerWithGoogle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
@@ -256,9 +272,9 @@
         android:layout_width="34dp"
         android:layout_height="29dp"
         android:layout_marginEnd="280dp"
-        app:layout_constraintBottom_toBottomOf="@+id/signInWithGoogle"
-        app:layout_constraintEnd_toEndOf="@+id/signInWithGoogle"
-        app:layout_constraintTop_toTopOf="@+id/signInWithGoogle"
+        app:layout_constraintBottom_toBottomOf="@+id/registerWithGoogle"
+        app:layout_constraintEnd_toEndOf="@+id/registerWithGoogle"
+        app:layout_constraintTop_toTopOf="@+id/registerWithGoogle"
         app:layout_constraintVertical_bias="0.421"
         app:srcCompat="@drawable/google_icon" />
 

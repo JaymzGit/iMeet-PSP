@@ -10,7 +10,7 @@
 
     <!-- Button with a gear icon to allow users to view/edit their profile -->
     <ImageButton
-        android:id="@+id/buttonUserProfile"
+        android:id="@+id/btnUserProfile"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
 
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
-        android:id="@+id/imageViewLogo"
+        android:id="@+id/ivLogo"
         android:layout_width="200dp"
         android:layout_height="82dp"
         android:layout_marginTop="0dp"
@@ -31,10 +31,10 @@
 
     <!-- Activity title -->
     <TextView
-        android:id="@+id/textViewUpcoming"
+        android:id="@+id/tvUpcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
+        android:layout_below="@id/ivLogo"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/montserrat_medium"
         android:text="Upcoming Meetings"
@@ -46,8 +46,8 @@
         android:id="@+id/rvUpcomingMeetings"
         android:layout_width="384dp"
         android:layout_height="514dp"
-        android:layout_above="@+id/buttonRegisterMeeting"
-        android:layout_below="@id/textViewUpcoming"
+        android:layout_above="@+id/btnRegisterMeeting"
+        android:layout_below="@id/tvUpcoming"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="4dp"
@@ -56,9 +56,10 @@
         android:layout_marginBottom="0dp"
         android:clipToPadding="false" />
 
+    <!-- TODO: Fix text sometimes showing/not showing on a case to case basis -->
     <!-- Show "No meetings found" text if there's no meetings that fit the criteria to be shown -->
     <TextView
-        android:id="@+id/textViewNoMeetings"
+        android:id="@+id/tvNoMeetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -70,7 +71,7 @@
 
     <!-- Button to redirect to a different activity which allows users to add their own meeting -->
     <Button
-        android:id="@+id/buttonRegisterMeeting"
+        android:id="@+id/btnRegisterMeeting"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

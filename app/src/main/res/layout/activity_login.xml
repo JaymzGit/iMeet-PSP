@@ -11,7 +11,7 @@
 
     <!-- Back button to navigate back to main screen -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         tools:ignore="HardcodedText" />
 
     <!-- EditText field for user to enter their email address -->
@@ -60,29 +60,35 @@
         app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
         tools:ignore="HardcodedText" />
 
-    <!-- EditText field for user to enter their password -->
-    <EditText
-        android:id="@+id/etPassword"
+    <!-- app:hintEnabled removes floating hint only, not all hints -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PasswordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_rounded_bg"
-        android:fontFamily="@font/montserrat"
-        android:hint="Enter your password"
-        android:inputType="textPassword"
-        android:padding="14dp"
-        android:textSize="16sp"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmailAddress"
-        app:layout_constraintVertical_bias="0.004"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintVertical_bias="0.004">
 
-    <!-- TODO: TextView for ForgotPassword that redirects to a different activity -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_bg"
+            android:fontFamily="@font/montserrat"
+            android:hint="Enter your password"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
-        android:id="@+id/txtForgotPassword"
+        android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
@@ -93,7 +99,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout"
         app:layout_constraintVertical_bias="0.017"
         tools:ignore="HardcodedText" />
 
@@ -111,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"
         app:layout_constraintVertical_bias="0.055"
         tools:ignore="HardcodedText" />
 
@@ -125,11 +131,15 @@
         android:fontFamily="@font/montserrat_medium"
         android:text="LOGIN"
         android:textColor="#FFFFFF"
+        android:progressTint="@android:color/white"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"
         app:layout_constraintVertical_bias="0.055"
         tools:ignore="HardcodedText" />
 
@@ -210,7 +220,7 @@
 
     <!-- TextView for "Don't have an account?" that redirects the user to Register page -->
     <TextView
-        android:id="@+id/txtRegister"
+        android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
