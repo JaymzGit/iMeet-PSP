@@ -9,17 +9,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.activity.OnBackPressedCallback;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,97 +27,163 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class RegisterMeeting extends AppCompatActivity {
+
+    // UI elements
+    ImageButton btnBack;
     EditText etTitle, etDate, etTime, etParticipants;
     Button btnAddMeeting;
-    private static final int SELECT_PARTICIPANTS_REQUEST_CODE = 1001;
+    ProgressBar progressBar;
+
+    // Constants
     private static final String SELECTED_PARTICIPANTS_KEY = "selectedParticipants";
+
+    // ActivityResultLauncher for SelectParticipants activity
+    private final ActivityResultLauncher<Intent> selectParticipantsLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    // Update the UI to display the number of selected participants
+                    ArrayList<String> selectedParticipants = getSharedPreferencesData();
+                    int participantCount = selectedParticipants.size();
+                    String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
+                    etParticipants.setText(message);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_meeting);
 
-        //apply dark mode if the phone is set to dark mode
+        // Apply dark mode if the phone is set to dark mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
-        etTitle = findViewById(R.id.editTextMeetingTitle);
-        etDate = findViewById(R.id.editTextMeetingDate);
-        etTime = findViewById(R.id.editTextMeetingTime);
-        etParticipants = findViewById(R.id.editTextParticipants);
-        btnAddMeeting = findViewById(R.id.buttonAddMeeting);
+        // Initialize UI elements
+        btnBack = findViewById(R.id.btnBack);
+        etTitle = findViewById(R.id.etMeetingTitle);
+        etDate = findViewById(R.id.etMeetingDate);
+        etTime = findViewById(R.id.etMeetingTime);
+        etParticipants = findViewById(R.id.etAddParticipants);
+        btnAddMeeting = findViewById(R.id.btnAddMeeting);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE); // Hide the progress bar from the user until the login button is pressed
 
-        etDate.setOnClickListener(new View.OnClickListener() {
+        // Set up listeners
+        etDate.setOnClickListener(v -> showDatePickerDialog());
+        etTime.setOnClickListener(v -> showTimePickerDialog());
+        etParticipants.setOnClickListener(v -> openSelectParticipantsActivity());
+
+        btnBack.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), MainActivity.class)));
+        btnAddMeeting.setOnClickListener(v -> addMeetingIfValid());
+
+        // Handle back press using OnBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
-        etTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimePickerDialog();
-            }
-        });
-
-        etParticipants.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterMeeting.this, SelectParticipants.class);
-                startActivityForResult(intent, SELECT_PARTICIPANTS_REQUEST_CODE);
-            }
-        });
-
-        btnAddMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Retrieve input values
-                String title = etTitle.getText().toString().trim();
-                String date = etDate.getText().toString().trim();
-                String time = etTime.getText().toString().trim();
-
-                // Check if any field is empty
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(date) || TextUtils.isEmpty(time)) {
-                    Toast.makeText(RegisterMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Add meeting data to Firestore
-                addMeetingToFirestore(title, date, time);
+            public void handleOnBackPressed() {
+                clearSharedPreferencesData();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish(); // Optionally close the current activity
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SELECT_PARTICIPANTS_REQUEST_CODE && resultCode == RESULT_OK) {
-            // Update the UI to display the number of selected participants
-            ArrayList<String> selectedParticipants = getSharedPreferencesData();
-            int participantCount = selectedParticipants.size();
-            String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
-            etParticipants.setText(message);
+    // Launch the SelectParticipants activity for result
+    private void openSelectParticipantsActivity() {
+        Intent intent = new Intent(RegisterMeeting.this, SelectParticipants.class);
+        selectParticipantsLauncher.launch(intent);
+    }
+
+    // Validate input and add meeting if valid
+    private void addMeetingIfValid() {
+        // Retrieve input values
+        String title = etTitle.getText().toString().trim();
+        String date = etDate.getText().toString().trim();
+        String time = etTime.getText().toString().trim();
+
+        // Check if any field is empty
+        if (isInputValid(title, date, time)) {
+            addMeetingToFirestore(title, date, time);
+            progressBar.setVisibility(View.VISIBLE);
+            btnAddMeeting.setVisibility(View.INVISIBLE);
+        } else {
+            Toast.makeText(RegisterMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        // Clear SharedPreferences data
-        clearSharedPreferencesData();
-        // Start MainActivity
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    // Validate input fields
+    private boolean isInputValid(String title, String date, String time) {
+        return !TextUtils.isEmpty(title) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time);
     }
 
+    // Add meeting data to Firestore
+    private void addMeetingToFirestore(String title, String date, String time) {
+        // Retrieve selected participants from SharedPreferences
+        ArrayList<String> selectedParticipants = getSharedPreferencesData();
+
+        if (!selectedParticipants.isEmpty()) {
+            // Get the current user's email (organiser)
+            String organiserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+            // Prepare participants data
+            List<Map<String, Object>> participantsData = new ArrayList<>();
+            for (String participantEmail : selectedParticipants) {
+                Map<String, Object> participantData = new HashMap<>();
+                participantData.put("email", participantEmail);
+                participantData.put("attendance", false); // Initialize attendance as false
+                participantData.put("reason", ""); // Initialize reason as empty string
+                participantsData.add(participantData);
+            }
+
+            // Prepare meeting data
+            Map<String, Object> meetingData = new HashMap<>();
+            meetingData.put("title", title);
+            meetingData.put("date", date);
+            meetingData.put("time", time);
+            meetingData.put("status", "Upcoming");
+            meetingData.put("organiser", organiserEmail);
+            meetingData.put("participants", participantsData);
+
+            // Add meeting data to Firestore
+            FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+            fStore.collection("meetings")
+                    .add(meetingData)
+                    .addOnSuccessListener(documentReference -> {
+                        // Show success message and clear fields
+                        Toast.makeText(RegisterMeeting.this, "Meeting added successfully", Toast.LENGTH_SHORT).show();
+                        clearInputFields();
+                        clearSharedPreferencesData();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    })
+                    .addOnFailureListener(e -> {
+                        // Show error message
+                        Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
+                        Log.e("Firestore", "Error adding document", e);
+                    });
+        } else {
+            Toast.makeText(RegisterMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Clear input fields
+    private void clearInputFields() {
+        etTitle.setText("");
+        etDate.setText("");
+        etTime.setText("");
+        etParticipants.setText("");
+    }
+
+    // Clear SharedPreferences data on activity destruction
     @Override
     public void onDestroy() {
         clearSharedPreferencesData();
         super.onDestroy();
     }
 
+    // Clear all data from SharedPreferences
     private void clearSharedPreferencesData() {
         SharedPreferences preferences = getSharedPreferences(SELECTED_PARTICIPANTS_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -125,62 +191,13 @@ public class RegisterMeeting extends AppCompatActivity {
         editor.apply();
     }
 
-    private void addMeetingToFirestore(String title, String date, String time) {
-        ArrayList<String> selectedParticipants = getSharedPreferencesData();
-
-        if (!selectedParticipants.isEmpty()) {
-            // Get the current user's email (organiser)
-            String organiserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-            // Query Firestore to check if the current user has already registered a meeting with the same title
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("meetings")
-                    .whereEqualTo("organiser", organiserEmail)
-                    .whereEqualTo("title", title)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            // If there's no existing meeting with the same title, add the new meeting
-                            if (task.getResult().isEmpty()) {
-                                Map<String, Object> meetingData = new HashMap<>();
-                                meetingData.put("title", title);
-                                meetingData.put("date", date);
-                                meetingData.put("time", time);
-                                meetingData.put("status", "Upcoming");
-                                meetingData.put("organiser", organiserEmail);
-                                meetingData.put("participants", selectedParticipants);
-
-                                // Add meeting data to Firestore
-                                db.collection("meetings")
-                                        .add(meetingData)
-                                        .addOnSuccessListener(documentReference -> {
-                                            Toast.makeText(RegisterMeeting.this, "Meeting added successfully", Toast.LENGTH_SHORT).show();
-                                            // Clear input fields
-                                            etTitle.setText("");
-                                            etDate.setText("");
-                                            etTime.setText("");
-                                            etParticipants.setText("");
-                                            clearSharedPreferencesData();
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
-                                            Log.e("Firestore", "Error adding document", e);
-                                        });
-                            } else {
-                                // A meeting with the same title exists
-                                Toast.makeText(RegisterMeeting.this, "A meeting with the same title has already been registered by you", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Log.e("Firestore", "Error getting documents: ", task.getException());
-                            Toast.makeText(RegisterMeeting.this, "Error checking for existing meetings", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(RegisterMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
-        }
+    // Retrieve selected participants from SharedPreferences
+    private ArrayList<String> getSharedPreferencesData() {
+        SharedPreferences preferences = getSharedPreferences(SELECTED_PARTICIPANTS_KEY, MODE_PRIVATE);
+        return new ArrayList<>(preferences.getStringSet(SELECTED_PARTICIPANTS_KEY, new HashSet<>()));
     }
 
-    // Method to show DatePickerDialog
+    // Show DatePickerDialog to select a date
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -190,22 +207,18 @@ public class RegisterMeeting extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 R.style.CustomDatePickerDialogTheme, // Apply custom theme here
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Check if the selected date is not in the past
-                        Calendar selectedDate = Calendar.getInstance();
-                        selectedDate.set(year, month, dayOfMonth);
-                        Calendar currentDate = Calendar.getInstance();
-                        if (selectedDate.before(currentDate)) {
-                            // Date is in the past, show a message or take appropriate action
-                            // For example:
-                            Toast.makeText(RegisterMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Do something with the selected date
-                            String selectedDateStr = dayOfMonth + "/" + (month + 1) + "/" + year;
-                            etDate.setText(selectedDateStr);
-                        }
+                (view, year1, month1, dayOfMonth1) -> {
+                    // Check if the selected date is not in the past
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(year1, month1, dayOfMonth1);
+                    Calendar currentDate = Calendar.getInstance();
+                    if (selectedDate.before(currentDate)) {
+                        // Date is in the past, show a message
+                        Toast.makeText(RegisterMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Set the selected date to the EditText
+                        String selectedDateStr = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;
+                        etDate.setText(selectedDateStr);
                     }
                 },
                 year,
@@ -216,7 +229,7 @@ public class RegisterMeeting extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Method to show TimePickerDialog
+    // Show TimePickerDialog to select a time
     private void showTimePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
@@ -225,23 +238,15 @@ public class RegisterMeeting extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 this,
                 R.style.CustomTimePickerDialogTheme, // Apply custom theme here
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        // Do something with the selected time
-                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
-                        etTime.setText(selectedTime);
-                    }
+                (view, hourOfDay1, minute1) -> {
+                    // Set the selected time to the EditText
+                    String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay1, minute1);
+                    etTime.setText(selectedTime);
                 },
                 hourOfDay,
                 minute,
                 false
         );
         timePickerDialog.show();
-    }
-
-    private ArrayList<String> getSharedPreferencesData() {
-        SharedPreferences preferences = getSharedPreferences(SELECTED_PARTICIPANTS_KEY, MODE_PRIVATE);
-        return new ArrayList<>(preferences.getStringSet(SELECTED_PARTICIPANTS_KEY, new HashSet<>()));
     }
 }

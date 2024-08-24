@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
@@ -63,53 +65,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             tvOrganiser = itemView.findViewById(R.id.textViewMeetingOrganiser);
             tvStatus = itemView.findViewById(R.id.textViewMeetingStatus);
             tvDetails = itemView.findViewById(R.id.textViewDetails);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Create a Firestore reference
-                    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-
-                    // Query Firestore to find the meeting document with the specified title, date, and organizer
-                    fStore.collection("meetings")
-                            .whereEqualTo("title", meeting.getTitle())
-                            .whereEqualTo("date", meeting.getDate())
-                            .whereEqualTo("time", meeting.getTime())
-                            .whereEqualTo("organiser", meeting.getOrganiser())
-                            .get()
-                            .addOnSuccessListener(queryDocumentSnapshots -> {
-                                if (!queryDocumentSnapshots.isEmpty()) {
-                                    // Retrieve the first document found (assuming there's only one match)
-                                    QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
-                                    // Retrieve the document ID
-                                    String meetingId = documentSnapshot.getId();
-
-                                    // Create an Intent object
-                                    Intent intent = new Intent(itemView.getContext(), MeetingDetails.class);
-
-                                    // Put data into the intent using a Bundle
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("meetingId", meetingId); // Put the meeting ID
-                                    bundle.putString("title", meeting.getTitle());
-                                    bundle.putString("date", meeting.getDate());
-                                    bundle.putString("time", meeting.getTime());
-                                    bundle.putString("organizer", meeting.getOrganiser());
-                                    bundle.putString("status", meeting.getStatus());
-                                    bundle.putStringArrayList("participants", meeting.getParticipants());
-
-                                    intent.putExtras(bundle);
-
-                                    // Start the activity from the context of the itemView
-                                    itemView.getContext().startActivity(intent);
-                                } else {
-                                    Log.d("Firestore", "No matching document found for the meeting.");
-                                }
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e("Firestore", "Error querying Firestore: ", e);
-                            });
-                }
-            });
         }
 
         @SuppressLint("SetTextI18n")
@@ -144,8 +99,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                                 // Load image using Glide
                                 Glide.with(itemView.getContext())
                                         .load(imageUrl)
-                                        .placeholder(R.drawable.default_image)
-                                        .error(R.drawable.default_image)
+                                        .placeholder(R.drawable.default_user_image)
+                                        .error(R.drawable.default_user_image)
                                         .into(ivOrganiser);
                             }
                         } else {
@@ -176,18 +131,73 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
                 // Set the SpannableString to the TextView
                 tvStatus.setText(spannableString);
+
+                // Disable click listener for meetings with status "Ended"
+                itemView.setClickable(false);
+                itemView.setFocusable(false);
+                itemView.setEnabled(false);
             } else {
                 // Set the status text without color
                 tvStatus.setText(statusText);
+
+                // Enable click listener for meetings with status other than "Ended"
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Handle click event
+                        // Create a Firestore reference
+                        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+
+                        // Query Firestore to find the meeting document with the specified title, date, and organizer
+                        fStore.collection("meetings")
+                                .whereEqualTo("title", meeting.getTitle())
+                                .whereEqualTo("date", meeting.getDate())
+                                .whereEqualTo("time", meeting.getTime())
+                                .whereEqualTo("organiser", meeting.getOrganiser())
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                        // Retrieve the first document found (assuming there's only one match)
+                                        QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
+                                        // Retrieve the document ID
+                                        String meetingId = documentSnapshot.getId();
+
+                                        // Create an Intent object
+                                        Intent intent = new Intent(itemView.getContext(), MeetingDetails.class);
+
+                                        // Put data into the intent using a Bundle
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("meetingId", meetingId); // Put the meeting ID
+                                        bundle.putString("title", meeting.getTitle());
+                                        bundle.putString("date", meeting.getDate());
+                                        bundle.putString("time", meeting.getTime());
+                                        bundle.putString("organizer", meeting.getOrganiser());
+                                        bundle.putString("status", meeting.getStatus());
+                                        ArrayList<String> participantsEmails = new ArrayList<>();
+                                        for (Participant participant : meeting.getParticipants()) {
+                                            participantsEmails.add(participant.getEmail());
+                                        }
+                                        bundle.putStringArrayList("participants", participantsEmails);
+
+                                        intent.putExtras(bundle);
+
+                                        // Start the activity from the context of the itemView
+                                        itemView.getContext().startActivity(intent);
+                                    } else {
+                                        Log.d("Firestore", "No matching document found for the meeting.");
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("Firestore", "Error querying Firestore: ", e);
+                                });
+                    }
+                });
             }
 
             // Check if the current user is the organizer of the meeting
             if (organizerEmail.equals(currentUserEmail)) {
-                // If the current user is the organizer, show the edit icon
-                // Assuming you have an ImageView for the edit icon with id imageViewEdit
                 imageViewEdit.setVisibility(View.VISIBLE);
             } else {
-                // If the current user is not the organizer, hide the edit icon
                 imageViewEdit.setVisibility(View.GONE);
             }
         }

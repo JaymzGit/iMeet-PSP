@@ -1,17 +1,20 @@
 package com.james.imeetpsp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Meeting {
+
+    // Meeting attributes
     private String organiser;
     private String title;
     private String date;
     private String time;
     private String status;
-    private ArrayList<String> participants; // Add field for participants
+    private List<Participant> participants;
 
+    // Default constructor for Firebase
     public Meeting() {
-        // Empty constructor required for Firebase
     }
 
     public Meeting(String title, String date, String time, String organiser, String status) {
@@ -23,12 +26,20 @@ public class Meeting {
         this.participants = new ArrayList<>(); // Initialize participants list
     }
 
+    public List<String> getParticipantEmails() {
+        List<String> emails = new ArrayList<>();
+        for (Participant participant : participants) {
+            emails.add(participant.getEmail());
+        }
+        return emails;
+    }
+
     // Getter and setter methods for participants
-    public ArrayList<String> getParticipants() {
+    public List<Participant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(ArrayList<String> participants) {
+    public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
 

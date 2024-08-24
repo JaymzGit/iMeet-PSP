@@ -1,16 +1,16 @@
 package com.james.imeetpsp;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,9 +27,36 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MeetingDetails extends AppCompatActivity {
-    String title, date, time, organizer, status;
+
+    // Firebase instance
+    private FirebaseAuth fAuth;
+
+    // UI elements
+    private ImageButton btnBack;
+    private TextView tvTitle;
+    private TextView tvDate;
+    private TextView tvTime;
+    private ImageView ivOrganizerImage;
+    private TextView tvOrganizerName;
+    private TextView tvOrganizerEmail;
+    private TextView tvStatus;
+    private Button btnViewParticipants;
+    private Button btnUpdateAttendance;
+    private RadioGroup radioGroupAttendance;
+    private Spinner spinnerReason;
+    private Button btnEditMeeting;
+
+    // Meeting details
+    private String title;
+    private String date;
+    private String time;
+    private String organizer;
+    private String status;
+    private String meetingID;
+    private String currentUserEmail;
     private ArrayList<String> participants;
 
     @Override
@@ -40,11 +67,43 @@ public class MeetingDetails extends AppCompatActivity {
         // Apply dark mode if the phone is set to dark mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
+        // Initialize FirebaseAuth
+        fAuth = FirebaseAuth.getInstance();
+
+        // Initialize UI elements
+        btnBack = findViewById(R.id.btnBack);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDate = findViewById(R.id.tvDate);
+        tvTime = findViewById(R.id.tvTime);
+        ivOrganizerImage = findViewById(R.id.ivOrganizer);
+        tvOrganizerName = findViewById(R.id.tvOrganizerName);
+        tvOrganizerEmail = findViewById(R.id.tvOrganizerEmail);
+        tvStatus = findViewById(R.id.tvStatus);
+        btnViewParticipants = findViewById(R.id.btnViewParticipants);
+        btnUpdateAttendance = findViewById(R.id.btnUpdateAttendance);
+        radioGroupAttendance = findViewById(R.id.radioGroupAttendance);
+        spinnerReason = findViewById(R.id.spinnerReason);
+        btnEditMeeting = findViewById(R.id.btnEditMeeting);
+
+        // Check if the current user is not null before accessing its email
+        if (fAuth.getCurrentUser() != null) {
+            currentUserEmail = fAuth.getCurrentUser().getEmail();
+        } else {
+            // Redirect to login if the current user is null
+            startActivity(new Intent(this, Login.class));
+            finish();
+            return; // Exit the onCreate method to prevent further execution
+        }
+
+        // Set up back button functionality
+        btnBack.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), MainActivity.class)));
+
         // Retrieve data from the intent
         Intent intent = getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
+                meetingID = extras.getString("meetingId");
                 title = extras.getString("title");
                 date = extras.getString("date");
                 time = extras.getString("time");
@@ -52,25 +111,11 @@ public class MeetingDetails extends AppCompatActivity {
                 status = extras.getString("status");
                 participants = extras.getStringArrayList("participants");
 
-                // Now you have the data, you can set it to your UI elements
-                // For example:
-                TextView tvTitle = findViewById(R.id.textViewTitle);
-                TextView tvDate = findViewById(R.id.textViewDate);
-                TextView tvTime = findViewById(R.id.textViewTime);
-                ImageView ivOrganizerImage = findViewById(R.id.imageViewOrganizer);
-                TextView tvOrganizerName = findViewById(R.id.textViewOrganizerName);
-                TextView tvOrganizerEmail = findViewById(R.id.textViewOrganizerEmail);
-                TextView tvStatus = findViewById(R.id.textViewStatus);
-                Button btnViewParticipants = findViewById(R.id.btnViewParticipants);
-
                 // Set data to UI elements
                 tvTitle.setText(title);
                 tvDate.setText(" Date: " + date);
                 tvTime.setText(" Time: " + time);
                 tvStatus.setText(" Status: " + status);
-
-                // Store a reference to the activity context
-                final MeetingDetails activityContext = this;
 
                 // Load organizer details
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -80,110 +125,128 @@ public class MeetingDetails extends AppCompatActivity {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 if (error != null) {
-                                    // Handle errors here
-                                    // For example:
                                     tvOrganizerName.setText("Error: " + error.getMessage());
                                     return;
                                 }
 
                                 if (value != null && !value.isEmpty()) {
                                     for (DocumentSnapshot document : value.getDocuments()) {
-                                        // Retrieve the full name from the document
                                         String fullName = document.getString("fname");
-                                        // Retrieve the email from the document
                                         String email = document.getString("email");
-                                        // Retrieve the image URL from the document
                                         String imageUrl = document.getString("imageUrl");
 
-                                        // Set the organizer's name to the TextView
                                         tvOrganizerName.setText(fullName);
-                                        // Set the organizer's email to the TextView
                                         tvOrganizerEmail.setText(email);
-
-                                        // Check if imageUrl and activityContext are not null before loading image
-                                        if (imageUrl != null && activityContext != null) {
-                                            // Load image using Glide with the stored activity context
-                                            Glide.with(activityContext)
+                                        if (imageUrl != null) {
+                                            Glide.with(MeetingDetails.this)
                                                     .load(imageUrl)
-                                                    .placeholder(R.drawable.default_image)
-                                                    .error(R.drawable.default_image)
+                                                    .placeholder(R.drawable.default_user_image)
+                                                    .error(R.drawable.default_user_image)
                                                     .into(ivOrganizerImage);
                                         } else {
-                                            // If imageUrl or activityContext is null, set the default image
-                                            ivOrganizerImage.setImageResource(R.drawable.default_image);
+                                            ivOrganizerImage.setImageResource(R.drawable.default_user_image);
                                         }
                                     }
                                 } else {
-                                    // Handle case where no matching document is found
-                                    // For example:
                                     tvOrganizerName.setText("Organizer not found");
                                     tvOrganizerEmail.setText("");
-                                    ivOrganizerImage.setImageResource(R.drawable.default_image);
+                                    ivOrganizerImage.setImageResource(R.drawable.default_user_image);
                                 }
                             }
                         });
 
                 // Check if the current user is the organizer
-                String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                if (currentUserEmail != null && currentUserEmail.equals(organizer)) {
-                    // If the current user is the organizer, hide attendance section
+                if (currentUserEmail.equals(organizer)) {
+                    // Hide attendance section if the current user is the organizer
                     findViewById(R.id.attendanceCardView).setVisibility(View.GONE);
-
-                    // Show button to view participants
-                    btnViewParticipants.setVisibility(View.VISIBLE);
-                    btnViewParticipants.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Handle button click to view participants
-                            Intent intent = new Intent(MeetingDetails.this, EditAttendance.class);
-                            intent.putStringArrayListExtra("participants", participants);
-                            startActivity(intent);
-                        }
+                    btnUpdateAttendance.setVisibility(View.GONE);
+                    btnEditMeeting.setVisibility(View.VISIBLE);
+                    btnEditMeeting.setOnClickListener(v -> {
+                        Intent editIntent = new Intent(MeetingDetails.this, EditMeeting.class);
+                        editIntent.putStringArrayListExtra("participants", participants);
+                        startActivity(editIntent);
                     });
                 }
 
                 // Initialize attendance section views
-                RadioGroup radioGroupAttendance = findViewById(R.id.radioGroupAttendance);
-                RadioButton radioButtonYes = findViewById(R.id.radioButtonYes);
-                RadioButton radioButtonNo = findViewById(R.id.radioButtonNo);
-                Spinner spinnerReason = findViewById(R.id.spinnerReason);
-
-                // Add listener for radio group
-                radioGroupAttendance.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if (checkedId == R.id.radioButtonNo) {
-                            // Show spinner when "No" is selected
-                            spinnerReason.setVisibility(View.VISIBLE);
-                        } else {
-                            // Hide spinner for other options
-                            spinnerReason.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-                // Populate spinner with reasons
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MeetingDetails.this,
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                         R.array.reasons_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerReason.setAdapter(adapter);
 
-                // Set listener for spinner item selection
-                spinnerReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        TextView textView = (TextView) view;
-                        // Set the text color to white
-                        textView.setTextColor(Color.WHITE);
-                        String reason = parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        // Do nothing
+                radioGroupAttendance.setOnCheckedChangeListener((group, checkedId) -> {
+                    if (checkedId == R.id.radioButtonNo) {
+                        spinnerReason.setVisibility(View.VISIBLE);
+                    } else {
+                        spinnerReason.setVisibility(View.GONE);
                     }
                 });
+
+                btnUpdateAttendance.setOnClickListener(v -> updateAttendance());
+
+                // Set up view participants button
+                btnViewParticipants.setOnClickListener(v -> {
+                    Intent participantsIntent = new Intent(MeetingDetails.this, EditAttendance.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("meetingId", meetingID);
+                    bundle.putString("organizer", organizer);
+                    bundle.putStringArrayList("participants", participants);
+                    participantsIntent.putExtras(bundle);
+                    startActivity(participantsIntent);
+                });
             }
+        }
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish(); // Optionally close the current activity
+            }
+        });
+    }
+
+    private void updateAttendance() {
+        // Get the selected attendance option
+        int checkedRadioButtonId = radioGroupAttendance.getCheckedRadioButtonId();
+
+        if (checkedRadioButtonId != -1) {
+            boolean attendance;
+            String reason;
+            RadioButton radioButton = findViewById(checkedRadioButtonId);
+            if (radioButton.getId() == R.id.radioButtonYes) {
+                reason = "";
+                attendance = true;
+            } else {
+                attendance = false;
+                reason = spinnerReason.getSelectedItem().toString();
+            }
+
+            // Update attendance and reason in Firestore
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("meetings")
+                    .document(meetingID)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            ArrayList<Map<String, Object>> participantsList = (ArrayList<Map<String, Object>>) documentSnapshot.get("participants");
+                            if (participantsList != null) {
+                                for (Map<String, Object> participant : participantsList) {
+                                    String participantEmail = (String) participant.get("email");
+                                    if (participantEmail != null && participantEmail.equals(currentUserEmail)) {
+                                        participant.put("attendance", attendance);
+                                        participant.put("reason", reason);
+                                        documentSnapshot.getReference().update("participants", participantsList)
+                                                .addOnSuccessListener(aVoid -> Toast.makeText(MeetingDetails.this, "Attendance updated successfully", Toast.LENGTH_SHORT).show())
+                                                .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Failed to update attendance: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Failed to update attendance: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(MeetingDetails.this, "Please select your attendance status", Toast.LENGTH_SHORT).show();
         }
     }
 }
