@@ -11,7 +11,7 @@
 
     <!-- Back button to navigate back to MeetingDetails -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -23,8 +23,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <!-- EditText to allow meeting creator to search through all users registered to the app -->
     <EditText
-        android:id="@+id/editTextSearch"
+        android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -37,16 +38,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         tools:ignore="HardcodedText" />
 
+    <!-- RecyclerView to display all existing users registered in the app -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewParticipants"
+        android:id="@+id/rvParticipants"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextSearch" />
+        app:layout_constraintTop_toBottomOf="@id/etSearch" />
 </androidx.constraintlayout.widget.ConstraintLayout>
