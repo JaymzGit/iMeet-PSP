@@ -8,9 +8,9 @@
     android:background="@drawable/app_background"
     android:padding="16dp">
 
-    <!-- Back button to navigate back to MeetingDetails -->
+    <!-- Back button to navigate back to MainActivity -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -23,22 +23,21 @@
 
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="200dp"
-        android:layout_height="82dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:id="@+id/ivLogo"
+        android:layout_width="303dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         app:srcCompat="@drawable/app_heading" />
 
     <!-- Activity title -->
     <TextView
-        android:id="@+id/textViewDetails"
+        android:id="@+id/tvDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
+        android:layout_below="@id/ivLogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
@@ -47,21 +46,21 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
 
     <!-- Meeting Details CardView -->
     <androidx.cardview.widget.CardView
         android:id="@+id/meetingDetailsCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewDetails"
+        android:layout_below="@id/tvDetails"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDetails">
+        app:layout_constraintTop_toBottomOf="@+id/tvDetails">
 
         <!-- Meeting Details Layout -->
         <LinearLayout
@@ -73,7 +72,7 @@
 
             <!-- Meeting Title -->
             <TextView
-                android:id="@+id/textViewTitle"
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
@@ -84,7 +83,7 @@
 
             <!-- Meeting Date -->
             <TextView
-                android:id="@+id/textViewDate"
+                android:id="@+id/tvDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
@@ -95,7 +94,7 @@
 
             <!-- Meeting Time -->
             <TextView
-                android:id="@+id/textViewTime"
+                android:id="@+id/tvTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
@@ -115,7 +114,7 @@
 
                 <!-- Organizer Image -->
                 <ImageView
-                    android:id="@+id/imageViewOrganizer"
+                    android:id="@+id/ivOrganizer"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/circle_background"
@@ -133,7 +132,7 @@
 
                     <!-- Organizer Name -->
                     <TextView
-                        android:id="@+id/textViewOrganizerName"
+                        android:id="@+id/tvOrganizerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
@@ -143,7 +142,7 @@
 
                     <!-- Organizer Email -->
                     <TextView
-                        android:id="@+id/textViewOrganizerEmail"
+                        android:id="@+id/tvOrganizerEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
@@ -154,7 +153,7 @@
 
             <!-- Meeting Status -->
             <TextView
-                android:id="@+id/textViewStatus"
+                android:id="@+id/tvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -224,7 +223,7 @@
 
             <!-- Are you attending? Text -->
             <TextView
-                android:id="@+id/textViewAreYouAttending"
+                android:id="@+id/tvAreYouAttending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
@@ -263,6 +262,7 @@
                     android:textColorHint="#FFFFFF" />
             </RadioGroup>
 
+            <!-- TODO: Find a way to change the color of box that popups for spinner -->
             <!-- Spinner for No option -->
             <Spinner
                 android:id="@+id/spinnerReason"

@@ -7,12 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:921457261942:android:2d9ae7bfa263fc75f90e57",
+        "mobilesdk_app_id": "1:921457261942:android:48376d7087a5dd00f90e57",
         "android_client_info": {
-          "package_name": "com.james.imeetpsp"
+          "package_name": "com.james.imeetpolycc"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "921457261942-omr1835uf6oi46ubk73nplmplpj4j233.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.james.imeetpolycc",
+            "certificate_hash": "56c12fde199860157e5566cfbd87637f1be661e6"
+          }
+        },
+        {
+          "client_id": "921457261942-0ohadgsli306jif8ippl603nvtasck49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDhWvxxJtsRNfte3P102CkaYcsw0l_H6lQ"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921457261942-0ohadgsli306jif8ippl603nvtasck49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
