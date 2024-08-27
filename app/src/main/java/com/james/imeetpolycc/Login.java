@@ -1,4 +1,4 @@
-package com.james.imeetpsp;
+package com.james.imeetpolycc;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;

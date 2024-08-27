@@ -1,4 +1,4 @@
-package com.james.imeetpsp;
+package com.james.imeetpolycc;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

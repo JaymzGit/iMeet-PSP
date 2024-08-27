@@ -1,4 +1,4 @@
-package com.james.imeetpsp;
+package com.james.imeetpolycc;
 
 import android.view.LayoutInflater;
 import android.view.View;

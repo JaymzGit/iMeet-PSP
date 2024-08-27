@@ -1,7 +1,6 @@
-package com.james.imeetpsp;
+package com.james.imeetpolycc;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -53,10 +50,10 @@ public class UserProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
-
         // Apply system-wide dark mode setting
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+        setContentView(R.layout.activity_user_profile);
 
         // Initialize Firebase instances
         fAuth = FirebaseAuth.getInstance();
@@ -104,12 +101,13 @@ public class UserProfile extends AppCompatActivity {
                         if (user != null) {
                             String currentUserEmail = user.getEmail();
 
-                            // Reference to Firestore "meetings" collection (already existing logic)
+                            // Reference to Firestore "meetings" collection
                             CollectionReference meetingsRef = fStore.collection("meetings");
 
                             meetingsRef.get().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot meetingDoc : task.getResult()) {
+                                        // Reference to participants subcollection
                                         CollectionReference participantsRef = meetingDoc.getReference().collection("participants");
 
                                         participantsRef.whereEqualTo("email", currentUserEmail)
@@ -120,14 +118,14 @@ public class UserProfile extends AppCompatActivity {
                                                                     .addOnSuccessListener(aVoid -> {
                                                                         // Participant successfully deleted
                                                                     }).addOnFailureListener(e -> {
-                                                                        Toast.makeText(UserProfile.this, "Failed to delete user authentication data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                                     });
                                                         }
                                                     }
                                                 });
                                     }
                                 } else {
-                                    Toast.makeText(UserProfile.this, "Failed to retrieve user meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserProfile.this, "Failed to retrieve meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -156,19 +154,13 @@ public class UserProfile extends AppCompatActivity {
                             });
 
                             // Proceed to delete the user from FirebaseAuth
-                            user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
-                                    fAuth.signOut();
-                                    startActivity(new Intent(getApplicationContext(), StartActivity.class));
-                                    finish();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(UserProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
+                            user.delete().addOnSuccessListener(aVoid -> {
+                                Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                                fAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(), StartActivity.class));
+                                finish();
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(UserProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                         }
                     })
@@ -179,7 +171,6 @@ public class UserProfile extends AppCompatActivity {
                     .create()
                     .show();
         });
-
 
         btnLogout.setOnClickListener(v -> {
             // Confirm deletion

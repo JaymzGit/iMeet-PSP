@@ -62,16 +62,10 @@
             android:exported="false" />
         <activity
             android:name=".UserProfile"
-            android:theme="@style/UserProfileTheme"
             android:exported="false" />
         <activity
             android:name=".EditProfile"
             android:exported="false" />
-
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"

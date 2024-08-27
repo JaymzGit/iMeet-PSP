@@ -16,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "iMeet PSP"
+rootProject.name = "iMeet POLYCC"
 include(":app")

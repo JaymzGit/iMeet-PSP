@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.james.imeetpsp"
+    namespace = "com.james.imeetpolycc"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.james.imeetpsp"
+        applicationId = "com.james.imeetpolycc"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
