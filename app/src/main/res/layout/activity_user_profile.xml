@@ -9,9 +9,9 @@
     android:background="@drawable/app_background"
     android:padding="16dp">
 
-    <!-- Back button to navigate back to main screen -->
+    <!-- Back button to navigate back to MainActivity -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -23,8 +23,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <!-- ImageView with circle_background to show a circular profile picture -->
     <ImageView
-        android:id="@+id/imageViewProfile"
+        android:id="@+id/ivProfilePicture"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="24dp"
@@ -32,67 +33,75 @@
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/default_user_image"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
-        tools:layout_editor_absoluteX="3dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- TextView to display signed in user's full name -->
     <TextView
-        android:id="@+id/textViewParticipantName"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
+        android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat_medium"
         android:text="John Doe"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        tools:layout_editor_absoluteY="88dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125" />
 
+    <!-- TextView to display signed in user's registered email address -->
     <TextView
-        android:id="@+id/textViewParticipantEmail"
+        android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantName"
+        android:layout_below="@id/tvUserName"
         android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
+        android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat"
         android:text="john.doe@example.com"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantName" />
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
+    <!-- TextView to display signed in user's registered phone number -->
     <TextView
-        android:id="@+id/textViewPhoneNumber"
+        android:id="@+id/tvUserPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantEmail"
+        android:layout_below="@id/tvUserEmail"
         android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/imageViewProfile"
+        android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat"
         android:text="+60123456789"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantEmail" />
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserEmail" />
 
-    <!-- View Participants and Edit Meeting Buttons Layout -->
-
-    <!-- Separate linear layout for divider with "Or Login with" text -->
+    <!-- Linear layout to group action buttons for edit and delete account -->
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" >
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserPhone"
+        tools:layout_editor_absoluteX="16dp">
 
-        <!-- Edit Meeting Button -->
+        <!-- Edit Profile button to allow user to edit any details -->
         <Button
-            android:id="@+id/btnEditMeeting"
+            android:id="@+id/btnEditProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -103,9 +112,9 @@
             android:text=" Edit Profile"
             android:textColor="#FFFFFF" />
 
-        <!-- View Participants Button -->
+        <!-- Delete Account button to allow user to delete their account -->
         <Button
-            android:id="@+id/btnViewParticipants"
+            android:id="@+id/btnDeleteAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_danger"
@@ -116,6 +125,7 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
+    <!-- Separate linear layout for divider -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -137,24 +147,58 @@
             android:background="#A59586" />
     </LinearLayout>
 
-    <!-- Wrap RecyclerView and TextView within a RelativeLayout -->
-
+    <!-- TextView to indicate the section below is for Past Meetings -->
     <TextView
-        android:id="@+id/textViewPastMeetings"
+        android:id="@+id/tvPastMeetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="264dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Past Meetings"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="126dp" />
+        app:layout_constraintVertical_bias="0.396" />
 
+    <!-- RecyclerView to display user's past meetings -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPastMeetings"
+        android:layout_width="379dp"
+        android:layout_height="339dp"
+        android:layout_above="@+id/btnLogout"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPastMeetings"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Show "No meetings found" text if there's no meetings that fit the criteria to be shown -->
+    <TextView
+        android:id="@+id/tvNoMeetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/montserrat"
+        android:text="No past meetings found"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.654" />
+
+    <!-- Logout button to allow user to log out of the current account -->
     <Button
-        android:id="@+id/buttonLogout"
+        android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rvPastMeetings"
@@ -167,21 +211,6 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPastMeetings"
-        android:layout_width="379dp"
-        android:layout_height="339dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="0dp"
-        android:layout_above="@+id/buttonLogout"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPastMeetings"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

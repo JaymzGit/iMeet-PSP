@@ -6,4 +6,9 @@
     <color name="darkBackground">#222222</color>
     <color name="lightPurple">#CA86F3</color>
     <color name="lightPurpleHint">#CCCCCC</color>
+
+    <color name="ucrop_color_statusbar">@color/colorPrimaryDark</color>
+    <color name="ucrop_color_toolbar">@color/colorPrimaryDark</color>
+    <color name="ucrop_color_toolbar_widget">#FFFFFF</color>
+    <color name="ucrop_color_blaze_orange">#A59586</color>
 </resources>

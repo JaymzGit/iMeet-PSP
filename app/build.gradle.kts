@@ -23,6 +23,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,17 +41,20 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    //Firebase dependencies
+    // Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("com.google.firebase:firebase-firestore:25.0.0")
     implementation("com.google.firebase:firebase-storage:21.0.0")
 
-    //Glide dependencies
+    // Glide dependencies
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
-    //OneSignal dependiences
+    // OneSignal dependencies
     implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
+
+    // UCrop dependency
+    implementation("com.github.Yalantis:ucrop:2.2.8")
 }

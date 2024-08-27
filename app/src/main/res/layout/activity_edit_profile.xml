@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <!-- ImageView with circle_background to show a circular profile picture -->
     <ImageView
         android:id="@+id/imageViewProfile"
         android:layout_width="80dp"
@@ -32,21 +33,33 @@
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/default_user_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBack"
-        tools:layout_editor_absoluteX="3dp" />
+        app:layout_constraintVertical_bias="0.001" />
 
+    <!-- ImageView with pencil vector art to indicate the profile picture is able to be updated -->
     <ImageView
         android:id="@+id/imageEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:layout_alignTop="@id/imageViewProfile"
         android:layout_alignEnd="@id/imageViewProfile"
-        android:src="@drawable/vector_edit_brown"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="72dp" />
+        android:background="@drawable/circle_edit_background"
+        android:padding="2dp"
+        android:src="@drawable/vector_edit_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.114" />
 
+    <!-- TextView to display signed in user's full name -->
     <TextView
-        android:id="@+id/textViewParticipantName"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -56,37 +69,52 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        tools:layout_editor_absoluteY="88dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.126" />
 
+    <!-- TextView to display signed in user's registered email address -->
     <TextView
-        android:id="@+id/textViewParticipantEmail"
+        android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantName"
+        android:layout_below="@id/tvUserName"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"
         android:text="john.doe@example.com"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- TextView to display signed in user's registered phone number -->
     <TextView
-        android:id="@+id/textViewPhoneNumber"
+        android:id="@+id/tvUserPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewParticipantEmail"
+        android:layout_below="@id/tvUserEmail"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"
         android:text="+60123456789"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewParticipantEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- EditText to enable user to edit their full name details -->
     <EditText
         android:id="@+id/etFullName"
         android:layout_width="0dp"
@@ -101,45 +129,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
 
+    <!-- EditText to enable user to edit their full name details -->
     <EditText
-        android:id="@+id/etPasswordConfirmation"
+        android:id="@+id/etEmailAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your password for confirmation"
-        android:inputType="textPassword"
+        android:hint="Enter your email address"
+        android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
 
-    <!-- EditText for user to enter their password of choice -->
+    <!-- EditText to display country code +60 in front of all phone numbers to be registered -->
     <EditText
         android:id="@+id/editText60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etEmailAddress"
+        android:layout_below="@id/etFullName"
         android:layout_marginTop="8dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
         android:inputType="numberSigned"
         android:padding="14dp"
-        android:textSize="16sp"
         android:text="+60 |"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmailAddress"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- EditText to allow user to edit their phone number details -->
     <EditText
         android:id="@+id/etPhoneNumber"
         android:layout_width="0dp"
@@ -152,28 +182,43 @@
         android:inputType="phone"
         android:padding="14dp"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFullName" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/button_primary"
-        android:fontFamily="@font/montserrat_medium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirmation"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailAddress"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!-- EditText to which requires users to re-enter the password for confirmation -->
+    <!-- app:hintEnabled removes floating hint only, not all hints -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PasswordLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber"
+        app:layout_constraintVertical_bias="0.004">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPasswordConfirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_bg"
+            android:fontFamily="@font/montserrat"
+            android:hint="Enter your password for confirmation"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
-        android:id="@+id/buttonUpdate"
+        android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -182,9 +227,31 @@
         android:text="UPDATE DETAILS"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirmation" />
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- Hidden progress bar/loading to indicate update function is in progress to the user when update button is pressed -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/button_primary"
+        android:fontFamily="@font/montserrat_medium"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/white"
+        android:indeterminateTintMode="src_atop"
+        android:progressTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
