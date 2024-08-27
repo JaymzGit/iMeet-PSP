@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserProfile extends AppCompatActivity {
 
@@ -52,7 +53,6 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Apply system-wide dark mode setting
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-
         setContentView(R.layout.activity_user_profile);
 
         // Initialize Firebase instances
@@ -91,55 +91,52 @@ public class UserProfile extends AppCompatActivity {
         btnBack.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), StartActivity.class)));
         btnEditProfile.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), EditProfile.class)));
         btnDeleteAccount.setOnClickListener(v -> {
-            // Confirm deletion
             new androidx.appcompat.app.AlertDialog.Builder(UserProfile.this)
                     .setTitle("Delete Account")
                     .setMessage("Are you sure you want to delete your account? We cannot restore accounts once they have been deleted.")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        // Sign out the user
                         FirebaseUser user = fAuth.getCurrentUser();
                         if (user != null) {
                             String currentUserEmail = user.getEmail();
-
-                            // Reference to Firestore "meetings" collection
                             CollectionReference meetingsRef = fStore.collection("meetings");
 
                             meetingsRef.get().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot meetingDoc : task.getResult()) {
-                                        // Reference to participants subcollection
-                                        CollectionReference participantsRef = meetingDoc.getReference().collection("participants");
+                                        ArrayList<Map<String, Object>> participants = (ArrayList<Map<String, Object>>) meetingDoc.get("participants");
 
-                                        participantsRef.whereEqualTo("email", currentUserEmail)
-                                                .get().addOnCompleteListener(participantTask -> {
-                                                    if (participantTask.isSuccessful()) {
-                                                        for (QueryDocumentSnapshot participantDoc : participantTask.getResult()) {
-                                                            participantDoc.getReference().delete()
-                                                                    .addOnSuccessListener(aVoid -> {
-                                                                        // Participant successfully deleted
-                                                                    }).addOnFailureListener(e -> {
-                                                                        Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                                    });
-                                                        }
-                                                    }
-                                                });
+                                        if (participants != null) {
+                                            for (int i = 0; i < participants.size(); i++) {
+                                                Map<String, Object> participant = participants.get(i);
+                                                String email = (String) participant.get("email");
+
+                                                if (email != null && email.equals(currentUserEmail)) {
+                                                    participants.remove(i); // Remove participant
+                                                    meetingDoc.getReference().update("participants", participants)
+                                                            .addOnSuccessListener(aVoid -> {
+                                                                // Participant successfully deleted
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            });
+                                                    break; // Exit loop once the participant is found and removed
+                                                }
+                                            }
+                                        }
                                     }
                                 } else {
                                     Toast.makeText(UserProfile.this, "Failed to retrieve meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
-                            // Reference to Firestore "users" collection to delete the user document
+                            // Proceed with deleting user data in the "users" collection and Firebase Auth
                             DocumentReference userDocRef = fStore.collection("users").document(user.getUid());
                             userDocRef.get().addOnSuccessListener(documentSnapshot -> {
                                 if (documentSnapshot.exists()) {
-                                    String imageUrl = documentSnapshot.getString("imageUrl"); // Get image URL
+                                    String imageUrl = documentSnapshot.getString("imageUrl");
 
-                                    // Delete user document from Firestore
                                     userDocRef.delete().addOnSuccessListener(aVoid -> {
-                                        // Delete the image from Firebase Storage if it exists
                                         if (imageUrl != null && !imageUrl.isEmpty()) {
-                                            // Extract the storage reference from the image URL
                                             StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
                                             imageRef.delete().addOnSuccessListener(aVoid1 -> {
                                             }).addOnFailureListener(e -> {
@@ -153,7 +150,6 @@ public class UserProfile extends AppCompatActivity {
                                 }
                             });
 
-                            // Proceed to delete the user from FirebaseAuth
                             user.delete().addOnSuccessListener(aVoid -> {
                                 Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
                                 fAuth.signOut();
@@ -164,10 +160,7 @@ public class UserProfile extends AppCompatActivity {
                             });
                         }
                     })
-                    .setNegativeButton("No", (dialog, which) -> {
-                        // Dismiss the dialog
-                        dialog.dismiss();
-                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                     .create()
                     .show();
         });
