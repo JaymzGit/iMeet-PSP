@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,11 +34,15 @@ public class SelectParticipants extends AppCompatActivity implements Participant
     private ImageButton btnBack;
     private EditText etSearch;
     private RecyclerView rvParticipants;
+    private TextView tvTotalParticipants;
 
     // Adapter and data
     private ParticipantsAdapter participantsAdapter;
     private List<Participant> allParticipants;
     private ArrayList<String> selectedParticipants;
+
+    // Counter for selected participants
+    private int selectedCount = 0;
 
     // SharedPreferences key
     private static final String SELECTED_PARTICIPANTS_KEY = "selectedParticipants";
@@ -55,10 +60,16 @@ public class SelectParticipants extends AppCompatActivity implements Participant
         btnBack = findViewById(R.id.btnBack);
         etSearch = findViewById(R.id.etSearch);
         rvParticipants = findViewById(R.id.rvParticipants);
+        tvTotalParticipants = findViewById(R.id.tvTotalParticipants);
 
         // Initialize data structures and adapter
         allParticipants = new ArrayList<>();
         selectedParticipants = getSharedPreferencesData(); // Load selected participants from SharedPreferences
+
+        // Set the selected count based on the already selected participants
+        selectedCount = selectedParticipants.size();
+        updateSelectedParticipantsCount(); // Update the count initially
+
         participantsAdapter = new ParticipantsAdapter(new ArrayList<>(), this);
         rvParticipants.setLayoutManager(new LinearLayoutManager(this));
         rvParticipants.setAdapter(participantsAdapter);
@@ -113,6 +124,9 @@ public class SelectParticipants extends AppCompatActivity implements Participant
                                 }
                             }
                             participantsAdapter.updateParticipants(allParticipants, selectedParticipants);
+
+                            // Update the total participants count after fetching the data
+                            updateSelectedParticipantsCount();
                         }
                     } else {
                         Toast.makeText(SelectParticipants.this, "Error fetching participants: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -125,12 +139,17 @@ public class SelectParticipants extends AppCompatActivity implements Participant
         Participant participant = allParticipants.get(position);
         if (isChecked) {
             selectedParticipants.add(participant.getEmail());
+            selectedCount++; // Increment count
         } else {
             selectedParticipants.remove(participant.getEmail());
+            selectedCount--; // Decrement count
         }
 
         // Save the updated list of selected participants to SharedPreferences
         saveSharedPreferencesData(selectedParticipants);
+
+        // Update TextView with the new counts
+        updateSelectedParticipantsCount();
     }
 
     @Override
@@ -172,5 +191,11 @@ public class SelectParticipants extends AppCompatActivity implements Participant
             }
         }
         participantsAdapter.filterList(filteredParticipants);
+    }
+
+    // Update the TextView with the current selected participants count
+    private void updateSelectedParticipantsCount() {
+        String text = "Total Participants - " + allParticipants.size() + " | Selected Participants - " + selectedCount;
+        tvTotalParticipants.setText(text);
     }
 }

@@ -41,6 +41,45 @@
         app:layout_constraintTop_toBottomOf="@+id/btnBack"
         tools:ignore="HardcodedText" />
 
+    <!-- TextView to display statistics like total participants, how many are selected -->
+    <TextView
+        android:id="@+id/tvTotalParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Total Participants - 0 | Selected Participants - 0"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        app:layout_constraintVertical_bias="0.001" />
+
+    <!-- Separate linear layout as a divider -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalParticipants"
+        app:layout_constraintVertical_bias="0.003">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#A59586" />
+    </LinearLayout>
+
     <!-- RecyclerView to display all existing users registered in the app -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvParticipants"
@@ -50,5 +89,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearch" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,7 @@
 package com.james.imeetpolycc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Participant {
 
-    // Participant attributes
     private String fname;
     private String email;
     private String imageUrl;
@@ -68,16 +64,5 @@ public class Participant {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    // Convert Participant object to a map for Firebase
-    public Map<String, Object> toMap() {
-        Map<String, Object> participantMap = new HashMap<>();
-        participantMap.put("fname", fname);
-        participantMap.put("email", email);
-        participantMap.put("imageUrl", imageUrl);
-        participantMap.put("attended", attended);
-        participantMap.put("reason", reason);
-        return participantMap;
     }
 }

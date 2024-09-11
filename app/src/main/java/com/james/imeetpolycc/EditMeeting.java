@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,9 +64,12 @@ public class EditMeeting extends AppCompatActivity {
         btnUpdateMeeting = findViewById(R.id.btnUpdateMeeting);
         btnDeleteMeeting = findViewById(R.id.btnDeleteMeeting);
 
-        // Retrieve the meeting ID from the Intent
-        meetingId = getIntent().getStringExtra("MEETING_ID");
-        if (meetingId != null) {
+        // Retrieve the meetingId from the intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            meetingId = intent.getStringExtra("meetingId");
+
+            // Query Firestore for meeting details using meetingId
             loadMeetingDetails(meetingId);
         }
 
@@ -73,8 +77,8 @@ public class EditMeeting extends AppCompatActivity {
         etDate.setOnClickListener(v -> showDatePickerDialog());
         etTime.setOnClickListener(v -> showTimePickerDialog());
         etParticipants.setOnClickListener(v -> {
-            Intent intent = new Intent(EditMeeting.this, SelectParticipants.class);
-            startActivityForResult(intent, SELECT_PARTICIPANTS_REQUEST_CODE);
+            Intent participantSelectIntent = new Intent(EditMeeting.this, SelectParticipants.class);
+            startActivityForResult(participantSelectIntent, SELECT_PARTICIPANTS_REQUEST_CODE);
         });
 
         btnBack.setOnClickListener(v -> onBackPressed());
@@ -106,13 +110,19 @@ public class EditMeeting extends AppCompatActivity {
                     .show();
         });
 
-        // Handle back press using OnBackPressedDispatcher
+        // Handle back press
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                clearSharedPreferencesData();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish(); // Optionally close the current activity
+                // Return to MeetingDetails activity with updated data
+                Intent intent = new Intent(EditMeeting.this, MeetingDetails.class);
+                intent.putExtra("meetingId", meetingId);
+                intent.putExtra("title", etTitle.getText().toString().trim());
+                intent.putExtra("date", etDate.getText().toString().trim());
+                intent.putExtra("time", etTime.getText().toString().trim());
+                intent.putStringArrayListExtra("participants", getSharedPreferencesData());
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -150,7 +160,7 @@ public class EditMeeting extends AppCompatActivity {
                 String title = documentSnapshot.getString("title");
                 String date = documentSnapshot.getString("date");
                 String time = documentSnapshot.getString("time");
-                ArrayList<String> participants = (ArrayList<String>) documentSnapshot.get("participants");
+                List<Map<String, Object>> participants = (List<Map<String, Object>>) documentSnapshot.get("participants");
 
                 etTitle.setText(title);
                 etDate.setText(date);
@@ -158,9 +168,17 @@ public class EditMeeting extends AppCompatActivity {
 
                 // Update participants display
                 if (participants != null) {
-                    int participantCount = participants.size();
+                    ArrayList<String> participantEmails = new ArrayList<>();
+                    for (Map<String, Object> participant : participants) {
+                        String email = (String) participant.get("email");
+                        participantEmails.add(email);
+                    }
+                    int participantCount = participantEmails.size();
                     String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
                     etParticipants.setText(message);
+
+                    // Save participants to SharedPreferences for auto-selection
+                    saveParticipantsToSharedPreferences(participantEmails);
                 }
             } else {
                 Toast.makeText(EditMeeting.this, "Meeting not found", Toast.LENGTH_SHORT).show();
@@ -182,11 +200,24 @@ public class EditMeeting extends AppCompatActivity {
             // Update meeting data in Firestore
             DocumentReference meetingRef = fStore.collection("meetings").document(meetingId);
 
+            // Prepare participants data
+            List<Map<String, Object>> participantsData = new ArrayList<>();
+            for (String participantEmail : selectedParticipants) {
+                Map<String, Object> participantData = new HashMap<>();
+                participantData.put("email", participantEmail);
+                participantData.put("attendance", false); // Initialize attendance as false
+                participantData.put("reason", ""); // Initialize reason as empty string
+                participantsData.add(participantData);
+            }
+
+            // Prepare meeting data
             Map<String, Object> meetingData = new HashMap<>();
             meetingData.put("title", title);
             meetingData.put("date", date);
             meetingData.put("time", time);
-            meetingData.put("participants", selectedParticipants);
+            meetingData.put("status", "Upcoming");
+            meetingData.put("organiser", organiserEmail);
+            meetingData.put("participants", participantsData);
 
             meetingRef.update(meetingData)
                     .addOnSuccessListener(aVoid -> {
@@ -226,29 +257,13 @@ public class EditMeeting extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                R.style.CustomDatePickerDialogTheme, // Apply custom theme here
-                (view, year1, month1, dayOfMonth1) -> {
-                    // Check if the selected date is not in the past
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(year1, month1, dayOfMonth1);
-                    Calendar currentDate = Calendar.getInstance();
-                    if (selectedDate.before(currentDate)) {
-                        // Date is in the past, show a message or take appropriate action
-                        Toast.makeText(EditMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Do something with the selected date
-                        String selectedDateStr = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;
-                        etDate.setText(selectedDateStr);
-                    }
-                },
-                year,
-                month,
-                dayOfMonth
-        );
+        DatePickerDialog datePickerDialog = new DatePickerDialog(EditMeeting.this,
+                (view, year1, month1, dayOfMonth) -> {
+                    String selectedDate = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, month1 + 1, dayOfMonth);
+                    etDate.setText(selectedDate);
+                }, year, month, day);
         datePickerDialog.show();
     }
 
@@ -257,19 +272,19 @@ public class EditMeeting extends AppCompatActivity {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                this,
-                R.style.CustomTimePickerDialogTheme, // Apply custom theme here
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditMeeting.this,
                 (view, hourOfDay, minute1) -> {
-                    // Format the time as HH:mm
-                    String timeStr = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1);
-                    etTime.setText(timeStr);
-                },
-                hour,
-                minute,
-                true
-        );
+                    String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1);
+                    etTime.setText(selectedTime);
+                }, hour, minute, true);
         timePickerDialog.show();
+    }
+
+    private void saveParticipantsToSharedPreferences(ArrayList<String> participants) {
+        SharedPreferences preferences = getSharedPreferences(SELECTED_PARTICIPANTS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet(SELECTED_PARTICIPANTS_KEY, new HashSet<>(participants));
+        editor.apply();
     }
 
     private ArrayList<String> getSharedPreferencesData() {

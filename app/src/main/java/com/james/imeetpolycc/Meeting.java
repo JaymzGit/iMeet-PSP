@@ -6,6 +6,7 @@ import java.util.List;
 public class Meeting {
 
     // Meeting attributes
+    private String id;
     private String organiser;
     private String title;
     private String date;
@@ -17,7 +18,8 @@ public class Meeting {
     public Meeting() {
     }
 
-    public Meeting(String title, String date, String time, String organiser, String status) {
+    public Meeting(String id, String title, String date, String time, String organiser, String status) {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.time = time;
@@ -39,9 +41,11 @@ public class Meeting {
         return participants;
     }
 
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }
+    public void setParticipants(List<Participant> participants) { this.participants = participants; }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getTitle() {
         return title;

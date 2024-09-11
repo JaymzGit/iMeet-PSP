@@ -171,7 +171,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                                         bundle.putString("title", meeting.getTitle());
                                         bundle.putString("date", meeting.getDate());
                                         bundle.putString("time", meeting.getTime());
-                                        bundle.putString("organizer", meeting.getOrganiser());
+                                        bundle.putString("organiser", meeting.getOrganiser());
                                         bundle.putString("status", meeting.getStatus());
                                         ArrayList<String> participantsEmails = new ArrayList<>();
                                         for (Participant participant : meeting.getParticipants()) {
