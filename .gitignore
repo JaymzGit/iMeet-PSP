@@ -1,5 +1,7 @@
 *.iml
 .gradle
+# Ignore local.properties
+local.properties
 /local.properties
 /.idea/caches
 /.idea/libraries
