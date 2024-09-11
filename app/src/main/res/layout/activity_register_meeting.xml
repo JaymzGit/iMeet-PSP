@@ -46,7 +46,6 @@
         android:text="Register Meeting"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
         tools:ignore="HardcodedText"
         tools:layout_editor_absoluteX="16dp" />

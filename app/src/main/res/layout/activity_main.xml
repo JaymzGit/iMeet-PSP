@@ -22,10 +22,14 @@
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="243dp"
-        android:layout_height="69dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
+        android:layout_width="303dp"
+        android:layout_height="49dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="30dp"
         app:srcCompat="@drawable/app_heading" />
 
     <!-- Activity title -->
@@ -35,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ivLogo"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Upcoming Meetings"
         android:textColor="#FFFFFF"
@@ -55,7 +60,6 @@
         android:layout_marginBottom="0dp"
         android:clipToPadding="false" />
 
-    <!-- TODO: Fix text sometimes showing/not showing on a case to case basis -->
     <!-- Show "No meetings found" text if there's no meetings that fit the criteria to be shown -->
     <TextView
         android:id="@+id/tvNoMeetings"
