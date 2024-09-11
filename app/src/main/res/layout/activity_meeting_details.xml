@@ -114,7 +114,7 @@
 
                 <!-- Organizer Image -->
                 <ImageView
-                    android:id="@+id/ivOrganizer"
+                    android:id="@+id/ivOrganiserImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/circle_background"
@@ -132,7 +132,7 @@
 
                     <!-- Organizer Name -->
                     <TextView
-                        android:id="@+id/tvOrganizerName"
+                        android:id="@+id/tvOrganiserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
@@ -142,7 +142,7 @@
 
                     <!-- Organizer Email -->
                     <TextView
-                        android:id="@+id/tvOrganizerEmail"
+                        android:id="@+id/tvOrganiserEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"

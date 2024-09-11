@@ -11,7 +11,7 @@
 
     <!-- Back button to navigate back to MeetingDetails -->
     <ImageButton
-        android:id="@+id/buttonBack"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
-    <!-- EditText to filter participants in the meeting -->
+    <!-- EditText to allow meeting creator to search through participants -->
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="0dp"
@@ -35,15 +35,17 @@
         android:hint="Search"
         android:maxLines="1"
         android:padding="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 
-    <!-- TextView to display total participants, and their attendance status -->
+    <!-- TextView to display statistics like total participants, how many are attending and how many are absenting -->
     <TextView
-        android:id="@+id/textViewTotalParticipants"
+        android:id="@+id/tvTotalParticipants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -51,12 +53,14 @@
         android:text="Total Participants - 0 | Attending - 0 | Absenting - 0"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearch" />
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        app:layout_constraintVertical_bias="0.001" />
 
-    <!-- Separate linear layout for divider with "Or Login with" text -->
+    <!-- Separate linear layout as a divider -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -68,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTotalParticipants"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalParticipants"
         app:layout_constraintVertical_bias="0.003">
 
         <View
@@ -80,7 +84,7 @@
 
     <!-- Recycler view which shows cards of participants in the meeting -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewParticipantAttendance"
+        android:id="@+id/rvParticipantAttendance"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
