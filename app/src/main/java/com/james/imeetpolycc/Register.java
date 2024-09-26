@@ -119,7 +119,6 @@ public class Register extends AppCompatActivity {
                 return;
             }
             if (TextUtils.isEmpty(confirm)) {
-                etConfirmPass.setError("Confirmation Password is required.");
                 return;
             }
             if (password.length() < 6) {
@@ -127,6 +126,7 @@ public class Register extends AppCompatActivity {
                 return;
             }
             if (!password.equals(confirm)) {
+                etPass.setError("Passwords do not match");
                 return;
             }
 
@@ -151,8 +151,14 @@ public class Register extends AppCompatActivity {
 
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
-                            Log.d("Error", task.getException().getMessage());
-                            Toast.makeText(Register.this, "An error has occurred. Please try again", Toast.LENGTH_SHORT).show();
+                            // Handle errors
+                            String errorMessage = task.getException().getMessage();
+                            if (errorMessage != null && errorMessage.contains("The email address is already in use by another account.")) {
+                                Toast.makeText(Register.this, "This email is already registered. Please use a different email.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("Error", errorMessage);
+                                Toast.makeText(Register.this, "An error has occurred. Please try again", Toast.LENGTH_SHORT).show();
+                            }
                             btnRegister.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
                         }
