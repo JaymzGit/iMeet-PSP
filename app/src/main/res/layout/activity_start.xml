@@ -10,17 +10,20 @@
     android:padding="16dp">
 
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
+
+    <!-- TextView to display app name -->
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="284dp"
         android:layout_height="47dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_heading" />
 
-    <!-- TextView to display app name -->
+    <!-- Vector/Icon -->
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
@@ -33,10 +36,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.127"
+        app:layout_constraintVertical_bias="0.145"
         tools:ignore="HardcodedText" />
 
-    <!-- Vector/Icon -->
+    <!-- Login button to allow existing users to log in -->
     <ImageView
         android:id="@+id/ivHomeScreen"
         android:layout_width="322dp"
@@ -46,10 +49,9 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427"
+        app:layout_constraintVertical_bias="0.46"
         app:srcCompat="@drawable/app_homescreen_image" />
 
-    <!-- Login button to allow existing users to log in -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
