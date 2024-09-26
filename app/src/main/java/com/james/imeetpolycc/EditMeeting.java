@@ -91,6 +91,7 @@ public class EditMeeting extends AppCompatActivity {
             String date = etDate.getText().toString().trim();
             String time = etTime.getText().toString().trim();
 
+            //TODO: Update text utils/error messages to better filter bad inputs
             // Check if any field is empty
             if (TextUtils.isEmpty(title) || TextUtils.isEmpty(date) || TextUtils.isEmpty(time)) {
                 Toast.makeText(EditMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();

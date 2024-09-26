@@ -96,6 +96,7 @@ public class Register extends AppCompatActivity {
             String phone = etPhone.getText().toString();
             String phoneNumber = "+60" + phone;
 
+            //TODO: Update text utils/error messages to better filter bad inputs
             // Validate inputs
             if (TextUtils.isEmpty(email)) {
                 etEmail.setError("Email is required.");
@@ -126,8 +127,6 @@ public class Register extends AppCompatActivity {
                 return;
             }
             if (!password.equals(confirm)) {
-                etPass.setError("Passwords do not match");
-                etConfirmPass.setError("Passwords do not match");
                 return;
             }
 

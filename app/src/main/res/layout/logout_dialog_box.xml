@@ -64,7 +64,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
-                android:text="Cancel"
+                android:text="CANCEL"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:clickable="true"
@@ -81,7 +81,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
-                android:text="Log Out"
+                android:text="LOG OUT"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -122,6 +122,7 @@ public class RegisterMeeting extends AppCompatActivity {
         }
     }
 
+    //TODO: Update text utils/error messages to better filter bad inputs
     // Validate input fields
     private boolean isInputValid(String title, String date, String time) {
         return !TextUtils.isEmpty(title) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time);

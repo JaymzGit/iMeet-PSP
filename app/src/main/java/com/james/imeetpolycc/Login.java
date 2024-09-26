@@ -91,6 +91,7 @@ public class Login extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPass.getText().toString().trim();
 
+        //TODO: Update text utils/error messages to better filter bad inputs
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email is required.");
             return;
