@@ -22,13 +22,13 @@
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="303dp"
-        android:layout_height="49dp"
+        android:layout_width="274dp"
+        android:layout_height="43dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="30dp"
         app:srcCompat="@drawable/app_heading" />
 
@@ -55,7 +55,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="0dp"
         android:clipToPadding="false" />

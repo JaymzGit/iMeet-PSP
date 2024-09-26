@@ -1,4 +1,4 @@
-<!-- activity_edit_attendance.xml -->
+<!-- activity_select_participants.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -26,8 +26,8 @@
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="303dp"
-        android:layout_height="49dp"
+        android:layout_width="274dp"
+        android:layout_height="43dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:text="Edit Meeting"
@@ -55,7 +55,7 @@
         android:id="@+id/etMeetingTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
         android:hint="Enter the meeting title"

@@ -24,8 +24,8 @@
     <!-- Politeknik Seberang Perai Logo/Letterhead -->
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="303dp"
-        android:layout_height="49dp"
+        android:layout_width="274dp"
+        android:layout_height="43dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDetails"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="12dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -285,6 +284,23 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_primary"
         android:text="UPDATE ATTENDANCE"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <!-- Button for meeting organiser to end meeting -->
+    <Button
+        android:id="@+id/btnEndMeeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_danger"
+        android:text="END MEETING"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     android:background="#FFFFFF"
+    app:cardBackgroundColor="#CBAA8D"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
     tools:layout_editor_absoluteX="16dp"
@@ -134,7 +135,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
             </LinearLayout>
-
         </LinearLayout>
 
         <!-- Move imageViewEdit to the top right corner -->
@@ -146,6 +146,5 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:src="@drawable/vector_edit_24" />
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>
