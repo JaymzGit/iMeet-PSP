@@ -111,15 +111,13 @@ public class EditMeeting extends AppCompatActivity {
             TextView buttonNo = customDialogView.findViewById(R.id.buttonNo);
             TextView buttonYes = customDialogView.findViewById(R.id.buttonYes);
 
-            // Create and set up the AlertDialog
             androidx.appcompat.app.AlertDialog customDialog = new androidx.appcompat.app.AlertDialog.Builder(EditMeeting.this)
                     .setView(customDialogView)
                     .create();
 
-            // Make the dialog background transparent
-            if (customDialog.getWindow() != null) {
-                customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            }
+            customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
+            customDialog.show();
+            customDialog.getWindow().setLayout(1200, 800); // Set your desired width and height here
 
             // Set button listeners
             buttonNo.setOnClickListener(view -> customDialog.dismiss());

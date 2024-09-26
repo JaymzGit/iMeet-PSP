@@ -200,7 +200,7 @@ public class UserProfile extends AppCompatActivity {
 
             customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
             customDialog.show();
-            customDialog.getWindow().setLayout(1000, 600); // Set your desired width and height here
+            customDialog.getWindow().setLayout(1000, 800); // Set your desired width and height here
 
             // Set button listeners
             buttonNo.setOnClickListener(view -> customDialog.dismiss());

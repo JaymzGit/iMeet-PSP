@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchUpcomingMeetings() {
         fStore.collection("meetings")
-                .whereIn("status", Arrays.asList("Ongoing", "Upcoming"))
+                .whereIn("status", Arrays.asList("Ongoing", "Upcoming", "Ended")) // Include "Ended" to fetch but filter later
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         Log.e("Firestore", "Error fetching documents: ", error);
@@ -127,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : value) {
                             Meeting meeting = document.toObject(Meeting.class);
                             meeting.setId(document.getId());
+
+                            // Check if the meeting status is not "Ended"
+                            if (meeting.getStatus().equals("Ended")) {
+                                continue; // Skip this meeting if it's ended
+                            }
 
                             if (meeting.getOrganiser() != null && meeting.getOrganiser().equals(currentUserEmail)) {
                                 upcomingMeetingsList.add(meeting);

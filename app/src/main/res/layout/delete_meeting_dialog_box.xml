@@ -27,7 +27,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:text="Delete Meeting?"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <!-- Divider Line Below Title -->
@@ -63,7 +63,7 @@
                 android:id="@+id/buttonNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardCornerRadius="8dp"
-    app:cardElevation="20dp"
+    app:cardElevation="10dp"
     app:cardBackgroundColor="#CBAA8D"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
@@ -26,7 +26,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:text="Delete Account?"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <!-- Divider Line Below Title -->
@@ -48,6 +48,8 @@
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 
+        <!-- Divider Line Above Buttons -->
+
         <!-- Horizontal layout for buttons -->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -60,10 +62,10 @@
                 android:id="@+id/buttonNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="12dp"
+                android:paddingVertical="8dp"
                 android:text="Cancel"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
@@ -80,7 +82,7 @@
                 android:focusable="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="12dp"
+                android:paddingVertical="8dp"
                 android:text="Delete"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -235,7 +236,7 @@ public class MeetingDetails extends AppCompatActivity {
 
             customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
             customDialog.show();
-            customDialog.getWindow().setLayout(1200, 600); // Set your desired width and height here
+            customDialog.getWindow().setLayout(1200, 800); // Set your desired width and height here
 
             // Set button listeners
             buttonNo.setOnClickListener(view -> customDialog.dismiss());
@@ -247,24 +248,21 @@ public class MeetingDetails extends AppCompatActivity {
     }
 
     private void setupForParticipant() {
-        // Initialize attendance section views
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.reasons_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Get the reasons array from resources
+        String[] reasonsArray = getResources().getStringArray(R.array.reasons_array);
+
+        // Initialize the custom adapter
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, reasonsArray);
         spinnerReason.setAdapter(adapter);
+
+        // Set the popup background color
+        spinnerReason.setPopupBackgroundDrawable(new ColorDrawable(Color.rgb(203, 170, 141))); // Set popup background
 
         spinnerReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position, long id) {
-                // Check if the selected item view is an instance of TextView
-                if (selectedItemView instanceof TextView) {
-                    // Set the text color to white for the selected item
-                    ((TextView) selectedItemView).setTextColor(Color.WHITE);
-                }
-
-                // Optionally handle the selected item here
                 String selectedItem = parent.getItemAtPosition(position).toString();
-                // Do something with the selected item if needed
+                // Handle the selected item if needed
             }
 
             @Override
