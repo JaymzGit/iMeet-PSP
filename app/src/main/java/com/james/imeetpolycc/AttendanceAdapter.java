@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
     private final List<Participant> participants;
     private final AttendanceListener listener;
     private final String currentUserEmail;
+    private int checkboxVisibility = View.VISIBLE; // Default visibility
 
     public AttendanceAdapter(AttendanceListener listener, String currentUserEmail) {
         this.participants = new ArrayList<>();
@@ -47,18 +47,20 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         Participant participant = participants.get(position);
 
-        holder.tvParticipantName.setText(participant.getName());
-        holder.tvParticipantEmail.setText(participant.getEmail());
+        holder.tvParticipantName.setText(" " + participant.getName());
+        holder.tvParticipantEmail.setText(" " + participant.getEmail());
         Glide.with(holder.itemView.getContext())
                 .load(participant.getProfilePictureUrl())
                 .placeholder(R.drawable.default_user_image)
                 .into(holder.ivProfilePicture);
 
         holder.checkBoxAttendance.setChecked(participant.getAttendance());
+        holder.checkBoxAttendance.setVisibility(checkboxVisibility); // Set checkbox visibility
 
         holder.checkBoxAttendance.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (listener != null) {
                 listener.onAttendanceChanged(position, isChecked);
+                updateAttendanceCounts(); // Update counts when attendance is changed
             }
         });
     }
@@ -79,6 +81,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
         participants.clear();
         participants.addAll(newParticipants);
         notifyDataSetChanged();
+    }
+
+    public void setAttendanceCheckboxVisibility(int visibility) {
+        checkboxVisibility = visibility; // Update visibility state
+        notifyDataSetChanged(); // Refresh the adapter to apply changes
     }
 
     private void updateAttendanceCounts() {

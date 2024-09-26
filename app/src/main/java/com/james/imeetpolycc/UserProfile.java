@@ -91,101 +91,125 @@ public class UserProfile extends AppCompatActivity {
         btnBack.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), StartActivity.class)));
         btnEditProfile.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), EditProfile.class)));
         btnDeleteAccount.setOnClickListener(v -> {
-            new androidx.appcompat.app.AlertDialog.Builder(UserProfile.this)
-                    .setTitle("Delete Account")
-                    .setMessage("Are you sure you want to delete your account? We cannot restore accounts once they have been deleted.")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        FirebaseUser user = fAuth.getCurrentUser();
-                        if (user != null) {
-                            String currentUserEmail = user.getEmail();
-                            CollectionReference meetingsRef = fStore.collection("meetings");
+            // Inflate the custom layout for the confirmation dialog
+            View customDialogView = getLayoutInflater().inflate(R.layout.delete_account_dialog_box, null);
 
-                            meetingsRef.get().addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot meetingDoc : task.getResult()) {
-                                        ArrayList<Map<String, Object>> participants = (ArrayList<Map<String, Object>>) meetingDoc.get("participants");
+            // Find views in the custom layout
+            TextView dialogTitle = customDialogView.findViewById(R.id.dialogTitle);
+            TextView dialogMessage = customDialogView.findViewById(R.id.dialogMessage);
+            TextView buttonNo = customDialogView.findViewById(R.id.buttonNo);
+            TextView buttonYes = customDialogView.findViewById(R.id.buttonYes);
 
-                                        if (participants != null) {
-                                            for (int i = 0; i < participants.size(); i++) {
-                                                Map<String, Object> participant = participants.get(i);
-                                                String email = (String) participant.get("email");
+            androidx.appcompat.app.AlertDialog customDialog = new androidx.appcompat.app.AlertDialog.Builder(UserProfile.this)
+                    .setView(customDialogView)
+                    .create();
 
-                                                if (email != null && email.equals(currentUserEmail)) {
-                                                    participants.remove(i); // Remove participant
-                                                    meetingDoc.getReference().update("participants", participants)
-                                                            .addOnSuccessListener(aVoid -> {
-                                                                // Participant successfully deleted
-                                                            })
-                                                            .addOnFailureListener(e -> {
-                                                                Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                            });
-                                                    break; // Exit loop once the participant is found and removed
-                                                }
-                                            }
+            customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
+            customDialog.show();
+            customDialog.getWindow().setLayout(1000, 600); // Set your desired width and height here
+
+            // Set dialog title and message
+            dialogTitle.setText("Delete Account?");
+            dialogMessage.setText("This action cannot be undone");
+
+            // Set button listeners
+            buttonNo.setOnClickListener(view -> customDialog.dismiss());
+
+            buttonYes.setOnClickListener(view -> {
+                FirebaseUser user = fAuth.getCurrentUser();
+                if (user != null) {
+                    String currentUserEmail = user.getEmail();
+                    CollectionReference meetingsRef = fStore.collection("meetings");
+
+                    meetingsRef.get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot meetingDoc : task.getResult()) {
+                                ArrayList<Map<String, Object>> participants = (ArrayList<Map<String, Object>>) meetingDoc.get("participants");
+
+                                if (participants != null) {
+                                    for (int i = 0; i < participants.size(); i++) {
+                                        Map<String, Object> participant = participants.get(i);
+                                        String email = (String) participant.get("email");
+
+                                        if (email != null && email.equals(currentUserEmail)) {
+                                            participants.remove(i); // Remove participant
+                                            meetingDoc.getReference().update("participants", participants)
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        // Participant successfully deleted
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    });
+                                            break; // Exit loop once the participant is found and removed
                                         }
                                     }
-                                } else {
-                                    Toast.makeText(UserProfile.this, "Failed to retrieve meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            }
+                        } else {
+                            Toast.makeText(UserProfile.this, "Failed to retrieve meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                            // Proceed with deleting user data in the "users" collection and Firebase Auth
-                            DocumentReference userDocRef = fStore.collection("users").document(user.getUid());
-                            userDocRef.get().addOnSuccessListener(documentSnapshot -> {
-                                if (documentSnapshot.exists()) {
-                                    String imageUrl = documentSnapshot.getString("imageUrl");
+                    // Proceed with deleting user data in the "users" collection and Firebase Auth
+                    DocumentReference userDocRef = fStore.collection("users").document(user.getUid());
+                    userDocRef.get().addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String imageUrl = documentSnapshot.getString("imageUrl");
 
-                                    userDocRef.delete().addOnSuccessListener(aVoid -> {
-                                        if (imageUrl != null && !imageUrl.isEmpty()) {
-                                            StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
-                                            imageRef.delete().addOnSuccessListener(aVoid1 -> {
-                                            }).addOnFailureListener(e -> {
-                                                Toast.makeText(UserProfile.this, "Failed to delete user profile picture: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            });
-                                        }
-
+                            userDocRef.delete().addOnSuccessListener(aVoid -> {
+                                if (imageUrl != null && !imageUrl.isEmpty()) {
+                                    StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
+                                    imageRef.delete().addOnSuccessListener(aVoid1 -> {
+                                        // Image deleted successfully
                                     }).addOnFailureListener(e -> {
-                                        Toast.makeText(UserProfile.this, "Failed to delete user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UserProfile.this, "Failed to delete user profile picture: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
                                 }
-                            });
-
-                            user.delete().addOnSuccessListener(aVoid -> {
-                                Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
-                                fAuth.signOut();
-                                startActivity(new Intent(getApplicationContext(), StartActivity.class));
-                                finish();
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(UserProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserProfile.this, "Failed to delete user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                         }
-                    })
-                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                    .create()
-                    .show();
+                    });
+
+                    user.delete().addOnSuccessListener(aVoid -> {
+                        Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                        fAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), StartActivity.class));
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(UserProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            });
+
+            // Show the dialog
+            customDialog.show();
         });
 
         btnLogout.setOnClickListener(v -> {
-            // Confirm deletion
-            new androidx.appcompat.app.AlertDialog.Builder(UserProfile.this)
-                    .setTitle("Log Out")
-                    .setMessage("Are you sure you want to logout?")
+            View customDialogView = getLayoutInflater().inflate(R.layout.logout_dialog_box, null);
 
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        // Sign out the user
-                        FirebaseAuth.getInstance().signOut();
+            TextView dialogTitle = customDialogView.findViewById(R.id.dialogTitle);
+            TextView dialogMessage = customDialogView.findViewById(R.id.dialogMessage);
+            TextView buttonNo = customDialogView.findViewById(R.id.buttonNo);
+            TextView buttonYes = customDialogView.findViewById(R.id.buttonYes);
 
-                        // Navigate to StartActivity and finish the current activity
-                        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                        startActivity(intent);
-                        finish();
-                    })
-                    .setNegativeButton("No", (dialog, which) -> {
-                        // Dismiss the dialog
-                        dialog.dismiss();
-                    })
-                    .create()
-                    .show();
+            androidx.appcompat.app.AlertDialog customDialog = new androidx.appcompat.app.AlertDialog.Builder(UserProfile.this)
+                    .setView(customDialogView)
+                    .create();
+
+            customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
+            customDialog.show();
+            customDialog.getWindow().setLayout(1000, 600); // Set your desired width and height here
+
+            // Set button listeners
+            buttonNo.setOnClickListener(view -> customDialog.dismiss());
+            buttonYes.setOnClickListener(view -> {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+                finish();
+            });
         });
 
         // Load user profile information

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
     private EditText etSearch;
 
     private String meetingID;
+    private String organizerEmail; // Add this to store the organizer's email
     private int attendingCount = 0;
     private int notAttendingCount = 0;
 
@@ -52,7 +54,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
         // Retrieve meeting ID from the intent
         meetingID = getIntent().getStringExtra("meetingId");
 
-        // Retrieve organizer email from FirebaseAuth
+        // Retrieve current user email from FirebaseAuth
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         // Initialize UI elements
@@ -71,7 +73,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
         allParticipants = new ArrayList<>();
 
         // Load participants from Firestore
-        loadParticipants();
+        loadParticipants(currentUserEmail); // Pass currentUserEmail to loadParticipants
 
         // Set up back button functionality
         btnBack.setOnClickListener(v -> super.onBackPressed());
@@ -82,14 +84,16 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { filterParticipants(s.toString()); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterParticipants(s.toString());
+            }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
     }
 
-    private void loadParticipants() {
+    private void loadParticipants(String currentUserEmail) {
         if (meetingID == null || meetingID.isEmpty()) {
             Log.e("EditAttendance", "Meeting ID is null or empty.");
             return;
@@ -102,6 +106,12 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document != null && document.exists()) {
+                            // Get the organizer's email from the document
+                            organizerEmail = document.getString("organiser");
+
+                            // Set visibility based on the organizer
+                            setVisibilityForOrganizer(currentUserEmail, organizerEmail);
+
                             List<Participant> participantsList = new ArrayList<>();
                             attendingCount = 0;
                             notAttendingCount = 0;
@@ -169,6 +179,16 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
                         Log.d("EditAttendance", "No such document.");
                     }
                 });
+    }
+
+    private void setVisibilityForOrganizer(String currentUserEmail, String organizerEmail) {
+        if (currentUserEmail.equals(organizerEmail)) {
+            // Show attendance checkboxes if current user is the organizer
+            adapter.setAttendanceCheckboxVisibility(View.VISIBLE);
+        } else {
+            // Hide attendance checkboxes if current user is not the organizer
+            adapter.setAttendanceCheckboxVisibility(View.GONE);
+        }
     }
 
     // Filter participants based on search input

@@ -15,7 +15,8 @@
         android:buttonTint="#FFFFFF"
         android:checked="false"
         android:gravity="center"
-        android:paddingStart="0dp" />
+        android:paddingStart="0dp"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

@@ -7,9 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -100,25 +102,44 @@ public class EditMeeting extends AppCompatActivity {
         });
 
         btnDeleteMeeting.setOnClickListener(v -> {
-            // Confirm deletion
-            new androidx.appcompat.app.AlertDialog.Builder(EditMeeting.this)
-                    .setTitle("Delete Meeting")
-                    .setMessage("Are you sure you want to delete this meeting?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        deleteMeetingFromFirestore(meetingId);
+            // Inflate the custom layout
+            View customDialogView = getLayoutInflater().inflate(R.layout.delete_meeting_dialog_box, null);
 
-                        // Call the static method to cancel the notification
-                        MeetingNotificationWorker.cancelNotification(EditMeeting.this, meetingId);
+            // Find views in the custom layout
+            TextView dialogTitle = customDialogView.findViewById(R.id.dialogTitle);
+            TextView dialogMessage = customDialogView.findViewById(R.id.dialogMessage);
+            TextView buttonNo = customDialogView.findViewById(R.id.buttonNo);
+            TextView buttonYes = customDialogView.findViewById(R.id.buttonYes);
 
-                        // Redirect to MainActivity
-                        Intent deletedIntent = new Intent(EditMeeting.this, MainActivity.class);
-                        deletedIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(deletedIntent);
-                        finish();  // Optional: Close EditMeeting activity if desired
-                    })
-                    .setNegativeButton("No", null)
-                    .create()
-                    .show();
+            // Create and set up the AlertDialog
+            androidx.appcompat.app.AlertDialog customDialog = new androidx.appcompat.app.AlertDialog.Builder(EditMeeting.this)
+                    .setView(customDialogView)
+                    .create();
+
+            // Make the dialog background transparent
+            if (customDialog.getWindow() != null) {
+                customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            }
+
+            // Set button listeners
+            buttonNo.setOnClickListener(view -> customDialog.dismiss());
+
+            buttonYes.setOnClickListener(view -> {
+                // Delete meeting from Firestore
+                deleteMeetingFromFirestore(meetingId);
+
+                // Call the static method to cancel the notification
+                MeetingNotificationWorker.cancelNotification(EditMeeting.this, meetingId);
+
+                // Redirect to MainActivity
+                Intent deletedIntent = new Intent(EditMeeting.this, MainActivity.class);
+                deletedIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(deletedIntent);
+                finish();  // Optional: Close EditMeeting activity if desired
+            });
+
+            // Show the dialog
+            customDialog.show();
         });
 
         // Handle back press

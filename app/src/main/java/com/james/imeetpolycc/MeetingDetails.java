@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -220,16 +222,27 @@ public class MeetingDetails extends AppCompatActivity {
         btnEditMeeting.setOnClickListener(v -> navigateToEditMeeting());
         btnViewParticipants.setOnClickListener(v -> navigateToViewParticipants());
         btnEndMeeting.setOnClickListener(v -> {
-            new androidx.appcompat.app.AlertDialog.Builder(MeetingDetails.this)
-                    .setTitle("End Meeting")
-                    .setMessage("Are you sure you want to end this meeting?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        FirebaseUser user = fAuth.getCurrentUser();
-                        endMeeting();
-                    })
-                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                    .create()
-                    .show();
+            View customDialogView = getLayoutInflater().inflate(R.layout.end_meeting_dialog_box, null);
+
+            TextView dialogTitle = customDialogView.findViewById(R.id.dialogTitle);
+            TextView dialogMessage = customDialogView.findViewById(R.id.dialogMessage);
+            TextView buttonNo = customDialogView.findViewById(R.id.buttonNo);
+            TextView buttonYes = customDialogView.findViewById(R.id.buttonYes);
+
+            androidx.appcompat.app.AlertDialog customDialog = new androidx.appcompat.app.AlertDialog.Builder(MeetingDetails.this)
+                    .setView(customDialogView)
+                    .create();
+
+            customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Optional: to make it transparent
+            customDialog.show();
+            customDialog.getWindow().setLayout(1200, 600); // Set your desired width and height here
+
+            // Set button listeners
+            buttonNo.setOnClickListener(view -> customDialog.dismiss());
+            buttonYes.setOnClickListener(view -> {
+                FirebaseUser user = fAuth.getCurrentUser();
+                endMeeting();
+            });
         });
     }
 
@@ -239,6 +252,26 @@ public class MeetingDetails extends AppCompatActivity {
                 R.array.reasons_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerReason.setAdapter(adapter);
+
+        spinnerReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position, long id) {
+                // Check if the selected item view is an instance of TextView
+                if (selectedItemView instanceof TextView) {
+                    // Set the text color to white for the selected item
+                    ((TextView) selectedItemView).setTextColor(Color.WHITE);
+                }
+
+                // Optionally handle the selected item here
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                // Do something with the selected item if needed
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle the case when nothing is selected if needed
+            }
+        });
 
         radioGroupAttendance.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radioButtonNo) {
