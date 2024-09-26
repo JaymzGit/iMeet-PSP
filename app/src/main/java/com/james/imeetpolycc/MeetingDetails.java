@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,11 +21,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,13 +40,13 @@ public class MeetingDetails extends AppCompatActivity {
 
     // Firebase instance
     private FirebaseAuth fAuth;
-    private FirebaseFirestore db;
+    private FirebaseFirestore fStore;
 
     // UI elements
     private ImageButton btnBack;
     private TextView tvTitle, tvDate, tvTime, tvOrganiserName, tvOrganiserEmail, tvStatus;
     private ImageView ivOrganiserImage;
-    private Button btnViewParticipants, btnUpdateAttendance, btnEditMeeting;
+    private Button btnViewParticipants, btnUpdateAttendance, btnEditMeeting, btnEndMeeting;
     private RadioGroup radioGroupAttendance;
     private Spinner spinnerReason;
 
@@ -54,7 +61,7 @@ public class MeetingDetails extends AppCompatActivity {
 
         // Initialize FirebaseAuth and Firestore
         fAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         // Get the current user's email
         currentUserEmail = fAuth.getCurrentUser() != null ? fAuth.getCurrentUser().getEmail() : null;
@@ -73,6 +80,7 @@ public class MeetingDetails extends AppCompatActivity {
         radioGroupAttendance = findViewById(R.id.radioGroupAttendance);
         spinnerReason = findViewById(R.id.spinnerReason);
         btnEditMeeting = findViewById(R.id.btnEditMeeting);
+        btnEndMeeting = findViewById(R.id.btnEndMeeting);
 
         // Retrieve meeting ID from the intent
         meetingID = getIntent().getStringExtra("meetingId");
@@ -101,7 +109,7 @@ public class MeetingDetails extends AppCompatActivity {
     }
 
     private void loadMeetingDetails() {
-        db.collection("meetings").document(meetingID).get()
+        fStore.collection("meetings").document(meetingID).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String title = documentSnapshot.getString("title");
@@ -133,7 +141,7 @@ public class MeetingDetails extends AppCompatActivity {
     }
 
     private void preFillAttendanceStatus() {
-        db.collection("meetings").document(meetingID).get()
+        fStore.collection("meetings").document(meetingID).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         ArrayList<Map<String, Object>> participantsList = (ArrayList<Map<String, Object>>) documentSnapshot.get("participants");
@@ -165,7 +173,7 @@ public class MeetingDetails extends AppCompatActivity {
     }
 
     private void loadOrganiserDetails(String organiserEmail) {
-        db.collection("users")
+        fStore.collection("users")
                 .whereEqualTo("email", organiserEmail)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -208,8 +216,21 @@ public class MeetingDetails extends AppCompatActivity {
         findViewById(R.id.attendanceCardView).setVisibility(View.GONE);
         btnUpdateAttendance.setVisibility(View.GONE);
         btnEditMeeting.setVisibility(View.VISIBLE);
+        btnEndMeeting.setVisibility(View.VISIBLE);
         btnEditMeeting.setOnClickListener(v -> navigateToEditMeeting());
         btnViewParticipants.setOnClickListener(v -> navigateToViewParticipants());
+        btnEndMeeting.setOnClickListener(v -> {
+            new androidx.appcompat.app.AlertDialog.Builder(MeetingDetails.this)
+                    .setTitle("End Meeting")
+                    .setMessage("Are you sure you want to end this meeting?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        FirebaseUser user = fAuth.getCurrentUser();
+                        endMeeting();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+        });
     }
 
     private void setupForParticipant() {
@@ -251,6 +272,34 @@ public class MeetingDetails extends AppCompatActivity {
         startActivity(participantsIntent);
     }
 
+    private void endMeeting() {
+        Log.d("MeetingDetails", "Updating meeting " + meetingID + " to Ended.");
+
+        fStore.collection("meetings")
+                .document(meetingID)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Check the current status to avoid unnecessary updates
+                        String currentStatus = documentSnapshot.getString("status");
+                        if (currentStatus != null && !currentStatus.equals("Ended")) {
+                            documentSnapshot.getReference().update("status", "Ended")
+                                    .addOnSuccessListener(aVoid -> Log.d("MeetingDetails", "Meeting status updated to " + "Ended"))
+                                    .addOnFailureListener(e -> Log.e("MeetingDetails", "Error updating meeting status", e));
+                        } else {
+                            Log.d("MeetingDetails", "Meeting status is already Ended");
+                        }
+                    } else {
+                        Log.e("MeetingDetails", "Meeting document not found");
+                    }
+
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainIntent);
+                    finish(); // Optionally close the current activity
+                })
+                .addOnFailureListener(e -> Log.e("MeetingDetails", "Error retrieving meeting document", e));
+    }
+
     private void updateAttendance() {
         // Get the selected attendance option
         int checkedRadioButtonId = radioGroupAttendance.getCheckedRadioButtonId();
@@ -268,7 +317,7 @@ public class MeetingDetails extends AppCompatActivity {
             }
 
             // Update attendance and reason in Firestore
-            db.collection("meetings")
+            fStore.collection("meetings")
                     .document(meetingID)
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {

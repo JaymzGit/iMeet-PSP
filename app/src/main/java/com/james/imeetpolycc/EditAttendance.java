@@ -153,7 +153,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
                                                 adapter.updateParticipants(allParticipants);
 
                                                 // Update the total participants text view
-                                                tvTotalParticipants.setText(String.format("Total Participants - %d \n Attending - %d | Not Attending - %d",
+                                                tvTotalParticipants.setText(String.format("Total Participants - %d\nAttending - %d | Not Attending - %d",
                                                         allParticipants.size(), attendingCount, notAttendingCount));
                                             } else {
                                                 Log.d("EditAttendance", "Error fetching user documents: ", userTask.getException());

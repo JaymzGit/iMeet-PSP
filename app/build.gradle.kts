@@ -8,12 +8,14 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        buildConfigField("String", "ONESIGNAL_APP_ID", "\"ade20ce9-1dad-4f0e-b829-5f8bccd19f49\"")
+        buildConfigField("String", "ONESIGNAL_REST_API_KEY", "\"NzdiMzg1N2QtM2FlZi00YWY3LTgzZjAtMmMxNTE3YTk2Mzcy\"")
+
         applicationId = "com.james.imeetpolycc"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,6 +24,10 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -57,4 +63,6 @@ dependencies {
 
     // UCrop dependency
     implementation("com.github.Yalantis:ucrop:2.2.8")
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }

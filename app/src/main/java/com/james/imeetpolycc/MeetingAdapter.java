@@ -112,6 +112,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             tvMeetingTitle.setText(limitMeetingName);
             tvMeetingDate.setText(" Date: " + meeting.getDate());
             tvMeetingTime.setText(" Time: " + meeting.getTime());
+            imageViewEdit.setVisibility(View.GONE);
 
             // Set the meeting status text
             String statusText = " Status: " + meeting.getStatus();
@@ -192,13 +193,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                                 });
                     }
                 });
-            }
-
-            // Check if the current user is the organizer of the meeting
-            if (organizerEmail.equals(currentUserEmail)) {
-                imageViewEdit.setVisibility(View.VISIBLE);
-            } else {
-                imageViewEdit.setVisibility(View.GONE);
             }
         }
     }

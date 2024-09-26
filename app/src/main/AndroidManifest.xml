@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".ApplicationClass"
@@ -16,23 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="32">
-        <activity
-            android:name=".ForgotPassword"
-            android:exported="false" />
-
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
+        <meta-data
+            android:name="com.onesignal.NotificationWillShowInForegroundHandler"
+            android:value="true" />
         <service
-            android:name=".MeetingMonitoringService"
-            android:exported="false"
-            android:foregroundServiceType="location" />
-
-        <receiver android:name=".NotificationReceiver" />
-
+            android:name=".MeetingNotificationWorker"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false"/>
         <activity
             android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,6 +41,9 @@
             android:exported="false" />
         <activity
             android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPassword"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

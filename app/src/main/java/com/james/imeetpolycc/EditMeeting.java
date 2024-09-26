@@ -104,7 +104,18 @@ public class EditMeeting extends AppCompatActivity {
             new androidx.appcompat.app.AlertDialog.Builder(EditMeeting.this)
                     .setTitle("Delete Meeting")
                     .setMessage("Are you sure you want to delete this meeting?")
-                    .setPositiveButton("Yes", (dialog, which) -> deleteMeetingFromFirestore(meetingId))
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        deleteMeetingFromFirestore(meetingId);
+
+                        // Call the static method to cancel the notification
+                        MeetingNotificationWorker.cancelNotification(EditMeeting.this, meetingId);
+
+                        // Redirect to MainActivity
+                        Intent deletedIntent = new Intent(EditMeeting.this, MainActivity.class);
+                        deletedIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(deletedIntent);
+                        finish();  // Optional: Close EditMeeting activity if desired
+                    })
                     .setNegativeButton("No", null)
                     .create()
                     .show();
@@ -253,30 +264,56 @@ public class EditMeeting extends AppCompatActivity {
                 });
     }
 
+    // Show DatePickerDialog to select a date
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(EditMeeting.this,
-                (view, year1, month1, dayOfMonth) -> {
-                    String selectedDate = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, month1 + 1, dayOfMonth);
-                    etDate.setText(selectedDate);
-                }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                R.style.CustomDatePickerDialogTheme, // Apply custom theme here
+                (view, year1, month1, dayOfMonth1) -> {
+                    // Set the selected date to the EditText
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(year1, month1, dayOfMonth1);
+                    Calendar currentDate = Calendar.getInstance();
+                    if (selectedDate.before(currentDate)) {
+                        // Date is in the past, show a message
+                        Toast.makeText(EditMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Set the selected date to the EditText
+                        String selectedDateStr = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;
+                        etDate.setText(selectedDateStr);
+                    }
+                },
+                year,
+                month,
+                dayOfMonth
+        );
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 
+    // Show TimePickerDialog to select a time
     private void showTimePickerDialog() {
         Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(EditMeeting.this,
-                (view, hourOfDay, minute1) -> {
-                    String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                R.style.CustomTimePickerDialogTheme, // Apply custom theme here
+                (view, hourOfDay1, minute1) -> {
+                    // Set the selected time to the EditText
+                    String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay1, minute1);
                     etTime.setText(selectedTime);
-                }, hour, minute, true);
+                },
+                hourOfDay,
+                minute,
+                false
+        );
         timePickerDialog.show();
     }
 

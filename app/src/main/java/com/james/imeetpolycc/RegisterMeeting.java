@@ -23,13 +23,17 @@ import androidx.activity.OnBackPressedCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class RegisterMeeting extends AppCompatActivity {
 
@@ -106,9 +110,13 @@ public class RegisterMeeting extends AppCompatActivity {
 
         // Check if any field is empty
         if (isInputValid(title, date, time)) {
-            addMeetingToFirestore(title, date, time);
-            progressBar.setVisibility(View.VISIBLE);
-            btnAddMeeting.setVisibility(View.INVISIBLE);
+            if (isDateAndTimeValid(date, time)) {
+                addMeetingToFirestore(title, date, time);
+                progressBar.setVisibility(View.VISIBLE);
+                btnAddMeeting.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(RegisterMeeting.this, "Invalid meeting time. Please choose a future date and time for the meeting.", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(RegisterMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         }
@@ -117,6 +125,22 @@ public class RegisterMeeting extends AppCompatActivity {
     // Validate input fields
     private boolean isInputValid(String title, String date, String time) {
         return !TextUtils.isEmpty(title) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time);
+    }
+
+    // Validate date and time based on GMT+8 timezone
+    private boolean isDateAndTimeValid(String date, String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        try {
+            String dateTime = date + " " + time;
+            Date meetingDateTime = sdf.parse(dateTime);
+            if (meetingDateTime != null) {
+                return meetingDateTime.after(new Date());
+            }
+        } catch (ParseException e) {
+            Log.e("DateTimeValidation", "Error parsing date and time", e);
+        }
+        return false;
     }
 
     // Add meeting data to Firestore
@@ -208,7 +232,7 @@ public class RegisterMeeting extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialogTheme, // Apply custom theme here
                 (view, year1, month1, dayOfMonth1) -> {
-                    // Check if the selected date is not in the past
+                    // Set the selected date to the EditText
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(year1, month1, dayOfMonth1);
                     Calendar currentDate = Calendar.getInstance();
