@@ -56,6 +56,7 @@ public class ForgotPassword extends AppCompatActivity {
         // Set up button listeners
         btnBack.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), StartActivity.class)));
 
+        //TODO:Better validation/translated
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,12 +72,12 @@ public class ForgotPassword extends AppCompatActivity {
                 fAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(ForgotPassword.this, "Reset password link has been sent to your registered email.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPassword.this, "Pautan set semula kata laluan telah dihantar ke e-mel berdaftar anda.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ForgotPassword.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPassword.this, "Ralat: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         btnResetPassword.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
                     }

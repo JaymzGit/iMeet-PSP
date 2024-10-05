@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,11 +49,14 @@ public class MeetingDetails extends AppCompatActivity {
 
     // UI elements
     private ImageButton btnBack;
-    private TextView tvTitle, tvDate, tvTime, tvOrganiserName, tvOrganiserEmail, tvStatus;
+    private TextView tvTitle, tvDate, tvTime, tvOrganiserName, tvOrganiserEmail, tvStatus, tvReason;
     private ImageView ivOrganiserImage;
     private Button btnViewParticipants, btnUpdateAttendance, btnEditMeeting, btnEndMeeting;
+    private CardView topicCardView;
     private RadioGroup radioGroupAttendance;
     private Spinner spinnerReason;
+    private TextInputLayout tilReasonOther;
+
 
     // Meeting details
     private String meetingID, currentUserEmail;
@@ -82,6 +87,9 @@ public class MeetingDetails extends AppCompatActivity {
         btnUpdateAttendance = findViewById(R.id.btnUpdateAttendance);
         radioGroupAttendance = findViewById(R.id.radioGroupAttendance);
         spinnerReason = findViewById(R.id.spinnerReason);
+        tvReason = findViewById(R.id.tvReason);
+        tilReasonOther = findViewById(R.id.tilReasonOther);
+        topicCardView = findViewById(R.id.topicCardView);
         btnEditMeeting = findViewById(R.id.btnEditMeeting);
         btnEndMeeting = findViewById(R.id.btnEndMeeting);
 
@@ -255,27 +263,34 @@ public class MeetingDetails extends AppCompatActivity {
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, reasonsArray);
         spinnerReason.setAdapter(adapter);
 
-        // Set the popup background color
-        spinnerReason.setPopupBackgroundDrawable(new ColorDrawable(Color.rgb(203, 170, 141))); // Set popup background
-
         spinnerReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
-                // Handle the selected item if needed
+
+                // Show TextView and TextInputLayout if "lain-lain" is selected, else hide them
+                if (selectedItem.equals("Lain-lain")) {
+                    tvReason.setVisibility(View.VISIBLE);
+                    tilReasonOther.setVisibility(View.VISIBLE);
+                } else {
+                    tvReason.setVisibility(View.GONE);
+                    tilReasonOther.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle the case when nothing is selected if needed
+                // No action needed here
             }
         });
 
         radioGroupAttendance.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radioButtonNo) {
                 spinnerReason.setVisibility(View.VISIBLE);
+                topicCardView.setVisibility(View.GONE);
             } else {
                 spinnerReason.setVisibility(View.GONE);
+                topicCardView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -313,8 +328,8 @@ public class MeetingDetails extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         // Check the current status to avoid unnecessary updates
                         String currentStatus = documentSnapshot.getString("status");
-                        if (currentStatus != null && !currentStatus.equals("Ended")) {
-                            documentSnapshot.getReference().update("status", "Ended")
+                        if (currentStatus != null && !currentStatus.equals("Berakhir")) {
+                            documentSnapshot.getReference().update("status", "Berakhir")
                                     .addOnSuccessListener(aVoid -> Log.d("MeetingDetails", "Meeting status updated to " + "Ended"))
                                     .addOnFailureListener(e -> Log.e("MeetingDetails", "Error updating meeting status", e));
                         } else {
@@ -362,19 +377,19 @@ public class MeetingDetails extends AppCompatActivity {
                                         participant.put("reason", reason);
                                         documentSnapshot.getReference().update("participants", participantsList)
                                                 .addOnSuccessListener(aVoid -> {
-                                                    Toast.makeText(MeetingDetails.this, "Attendance updated successfully", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(MeetingDetails.this, "Kehadiran berjaya dikemaskini", Toast.LENGTH_SHORT).show();
                                                     navigateToMainActivity();
                                                 })
-                                                .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Failed to update attendance: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                                .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Gagal mengemaskini kehadiran", Toast.LENGTH_SHORT).show());
                                         break;
                                     }
                                 }
                             }
                         }
                     })
-                    .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Failed to retrieve meeting details: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> Toast.makeText(MeetingDetails.this, "Gagal mendapatkan butiran mesyuarat" + e.getMessage(), Toast.LENGTH_SHORT).show());
         } else {
-            Toast.makeText(this, "Please select an attendance option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sila kemaskini kehadiran tuan/puan", Toast.LENGTH_SHORT).show();
         }
     }
 }

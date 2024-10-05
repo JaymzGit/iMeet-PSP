@@ -5,7 +5,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="#F5F5F7"
     android:padding="16dp">
 
     <!-- Back button to navigate back to MainActivity -->
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_outline"
+        android:background="@drawable/button_outline_grey"
         android:contentDescription="Back"
         android:padding="8dp"
         android:src="@drawable/vector_arrow_back_24"
@@ -26,8 +26,9 @@
         android:id="@+id/ivLogo"
         android:layout_width="274dp"
         android:layout_height="43dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBack"
         app:srcCompat="@drawable/app_heading" />
@@ -41,8 +42,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Meeting Details"
-        android:textColor="#FFFFFF"
+        android:text="BUTIRAN MESYUARAT"
+        android:textColor="#2E3192"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,22 +66,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CBAA8D"
+            android:background="@drawable/button_outline"
             android:orientation="vertical"
             android:padding="14dp">
 
             <!-- Meeting Title -->
+
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Meeting Title"
-                android:textColor="#FFFFFF"
+                android:text="Perkara:"
+                android:textColor="#4549C4"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <!-- Meeting Date -->
+
+            <!-- Meeting Venue -->
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="match_parent"
@@ -88,8 +92,18 @@
                 android:layout_marginBottom="2dp"
                 android:drawableStart="@drawable/vector_calendar_18"
                 android:fontFamily="@font/montserrat_medium"
-                android:text=" Meeting Date:"
-                android:textColor="#FFFFFF" />
+                android:text=" Tarikh:"
+                android:textColor="#4549C4" />
+
+            <TextView
+                android:id="@+id/tvVenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:drawableStart="@drawable/vector_calendar_18"
+                android:fontFamily="@font/montserrat_medium"
+                android:text=" Tempat:"
+                android:textColor="#4549C4" />
 
             <!-- Meeting Time -->
             <TextView
@@ -99,8 +113,8 @@
                 android:layout_marginBottom="2dp"
                 android:drawableStart="@drawable/vector_clock_18"
                 android:fontFamily="@font/montserrat_medium"
-                android:text=" Meeting Time:"
-                android:textColor="#FFFFFF" />
+                android:text=" Masa:"
+                android:textColor="#4549C4" />
 
             <!-- Organizer Details -->
             <LinearLayout
@@ -135,8 +149,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Organizer Name"
-                        android:textColor="#FFFFFF"
+                        android:text="Nama Penganjur"
+                        android:textColor="#4549C4"
                         android:textSize="14sp" />
 
                     <!-- Organizer Email -->
@@ -145,8 +159,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Organizer Email"
-                        android:textColor="#FFFFFF" />
+                        android:text="E-mel Penganjur"
+                        android:textColor="#4549C4" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -159,7 +173,7 @@
                 android:drawableStart="@drawable/vector_reload_18"
                 android:fontFamily="@font/montserrat_medium"
                 android:text=" Status:"
-                android:textColor="#FFFFFF" />
+                android:textColor="#4549C4" />
 
             <!-- View Participants and Edit Meeting Buttons Layout -->
             <LinearLayout
@@ -167,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/meetingDetailsCardView"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <!-- Edit Meeting Button -->
                 <Button
@@ -176,13 +190,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/button_primary"
+                    android:background="@drawable/button_secondary"
                     android:drawableStart="@drawable/vector_edit_24"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text=" Edit Meeting"
+                    android:text="KEMASKINI MESYUARAT"
                     android:textColor="#FFFFFF"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <!-- View Participants Button -->
                 <Button
@@ -190,12 +204,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/button_primary"
+                    android:background="@drawable/button_secondary"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="View Participants"
+                    android:text="SENARAI PESERTA"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -205,7 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/meetingDetailsCardView"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,7 +231,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CBAA8D"
+            android:background="@drawable/button_outline"
             android:orientation="vertical"
             android:padding="14dp">
 
@@ -227,8 +242,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Are you attending?"
-                android:textColor="#FFFFFF" />
+                android:text="Sila kemaskini kehadiran tuan/puan, sekiranya tidak hadir, sila nyatakan sebab"
+                android:textColor="#4549C4" />
 
             <!-- Radio Buttons (Yes/No) -->
             <RadioGroup
@@ -242,21 +257,21 @@
                     android:id="@+id/radioButtonYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="#FFFFFF"
+                    android:buttonTint="#4549C4"
                     android:fontFamily="@font/montserrat"
-                    android:text="Yes"
-                    android:textColor="#FFFFFF"
+                    android:text="Akan Hadir"
+                    android:textColor="#4549C4"
                     android:textColorHighlight="#FFFFFF"
-                    android:textColorHint="#FFFFFF" />
+                    android:textColorHint="#4549C4" />
 
                 <RadioButton
                     android:id="@+id/radioButtonNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="#FFFFFF"
+                    android:buttonTint="#4549C4"
                     android:fontFamily="@font/montserrat"
-                    android:text="No"
-                    android:textColor="#FFFFFF"
+                    android:text="Tidak Hadir"
+                    android:textColor="#4549C4"
                     android:textColorHighlight="#FFFFFF"
                     android:textColorHint="#FFFFFF" />
             </RadioGroup>
@@ -267,12 +282,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-5dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat"
-                android:popupBackground="#CBAA8D"
+                android:popupBackground="@drawable/spinner_background"
                 android:spinnerMode="dropdown"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"/>
+                android:textColor="#585BCA" />
+
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Untuk sebab 'lain-lain', sila nyatakan di bawah:"
+                android:textColor="#4549C4"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilReasonOther"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintEnabled="false"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="#585BCA"
+                    android:backgroundTint="#585BCA"
+                    android:textColor="#585BCA"
+                    android:textColorHighlight="#585BCA"
+                    android:textColorHint="#585BCA"
+                    android:textColorLink="#585BCA"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Topic CardView -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topicCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/attendanceCardView"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attendanceCardView"
+        android:visibility="gone">
+
+        <!-- Topic Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_outline"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <!-- Are you attending? Text -->
+            <TextView
+                android:id="@+id/tvMeetingIssues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Sila nyatakan isu yang akan dibangkitkan oleh tuan/puan semasa mesyuarat"
+                android:textColor="#585BCA" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="#585BCA"
+                    android:backgroundTint="#585BCA"
+                    android:textColor="#585BCA"
+                    android:textColorHighlight="#585BCA"
+                    android:textColorHint="#585BCA"
+                    android:textColorLink="#585BCA"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -283,8 +378,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button_primary"
-        android:text="UPDATE ATTENDANCE"
+        android:background="@drawable/button_secondary"
+        android:text="KEMASKINI KEHADIRAN"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -301,7 +396,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_danger"
-        android:text="END MEETING"
+        android:text="TAMATKAN MESYUARAT"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

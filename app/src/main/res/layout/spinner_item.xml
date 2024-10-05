@@ -4,6 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:textColor="#FFFFFF"
-    android:fontFamily="@font/montserrat_medium"
-    android:background="?android:attr/selectableItemBackground" />
+    android:textColor="#585BCA"
+    android:fontFamily="@font/montserrat_medium" />

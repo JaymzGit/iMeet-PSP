@@ -6,7 +6,7 @@
     android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="#F5F5F7"
     android:padding="16dp">
 
     <!-- Back button to navigate back to MainActivity -->
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_outline"
+        android:background="@drawable/button_outline_grey"
         android:contentDescription="Back"
         android:padding="8dp"
         android:src="@drawable/vector_arrow_back_24"
@@ -28,7 +28,7 @@
         android:id="@+id/ivProfilePicture"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/circle_background"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
@@ -49,13 +49,13 @@
         android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat_medium"
         android:text="John Doe"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.113" />
 
     <!-- TextView to display signed in user's registered email address -->
     <TextView
@@ -67,7 +67,7 @@
         android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat"
         android:text="john.doe@example.com"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
@@ -82,7 +82,7 @@
         android:layout_toEndOf="@id/ivProfilePicture"
         android:fontFamily="@font/montserrat"
         android:text="+60123456789"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tvUserEmail" />
@@ -90,14 +90,15 @@
     <!-- Linear layout to group action buttons for edit and delete account -->
     <LinearLayout
         android:id="@+id/buttonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="398dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserPhone"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserPhone">
 
         <!-- Edit Profile button to allow user to edit any details -->
         <Button
@@ -109,7 +110,7 @@
             android:drawableStart="@drawable/vector_edit_24"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text=" Edit Profile"
+            android:text="KEMASKINI PROFIL"
             android:textColor="#FFFFFF" />
 
         <!-- Delete Account button to allow user to delete their account -->
@@ -121,7 +122,7 @@
             android:drawableStart="@drawable/vector_delete_24"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="DELETE ACCOUNT"
+            android:text="HAPUSKAN AKAUN"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
@@ -144,7 +145,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#A59586" />
+            android:background="#2E3192" />
     </LinearLayout>
 
     <!-- TextView to indicate the section below is for Past Meetings -->
@@ -156,8 +157,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Past Meetings"
-        android:textColor="#FFFFFF"
+        android:text="MESYUARAT YANG LALU"
+        android:textColor="#2E3192"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -206,7 +207,7 @@
         android:background="@drawable/button_danger"
         android:fontFamily="@font/montserrat_medium"
         android:onClick="logout"
-        android:text="Logout"
+        android:text="LOG KELUAR"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

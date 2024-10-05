@@ -2,11 +2,11 @@
 <resources>
     <!-- Custom DatePickerDialog Theme -->
     <style name="CustomDatePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="colorAccent">#CBAA8D</item>
+        <item name="colorAccent">#585BCA</item>
     </style>
 
     <!-- Custom TimePickerDialog Theme -->
     <style name="CustomTimePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="colorAccent">#CBAA8D</item>
+        <item name="colorAccent">#585BCA</item>
     </style>
 </resources>

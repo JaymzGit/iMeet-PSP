@@ -53,7 +53,7 @@ public class RegisterMeeting extends AppCompatActivity {
                     // Update the UI to display the number of selected participants
                     ArrayList<String> selectedParticipants = getSharedPreferencesData();
                     int participantCount = selectedParticipants.size();
-                    String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
+                    String message = participantCount + " peserta terpilih";
                     etParticipants.setText(message);
                 }
             });
@@ -115,10 +115,10 @@ public class RegisterMeeting extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 btnAddMeeting.setVisibility(View.INVISIBLE);
             } else {
-                Toast.makeText(RegisterMeeting.this, "Invalid meeting time. Please choose a future date and time for the meeting.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterMeeting.this, "Tarikh/masa mesyuarat tidak sah. Sila pastikan tarikh/masa tidak berlepas.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(RegisterMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterMeeting.this, "Sila pastikan semua butiran telah diisi", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -178,18 +178,18 @@ public class RegisterMeeting extends AppCompatActivity {
                     .add(meetingData)
                     .addOnSuccessListener(documentReference -> {
                         // Show success message and clear fields
-                        Toast.makeText(RegisterMeeting.this, "Meeting added successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterMeeting.this, "Berjaya mendaftar mesyuarat", Toast.LENGTH_SHORT).show();
                         clearInputFields();
                         clearSharedPreferencesData();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     })
                     .addOnFailureListener(e -> {
                         // Show error message
-                        Toast.makeText(RegisterMeeting.this, "Failed to add meeting", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterMeeting.this, "Gagal mendaftar mesyuarat", Toast.LENGTH_SHORT).show();
                         Log.e("Firestore", "Error adding document", e);
                     });
         } else {
-            Toast.makeText(RegisterMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterMeeting.this, "Sila pilih peserta mesyuarat", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -239,7 +239,7 @@ public class RegisterMeeting extends AppCompatActivity {
                     Calendar currentDate = Calendar.getInstance();
                     if (selectedDate.before(currentDate)) {
                         // Date is in the past, show a message
-                        Toast.makeText(RegisterMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterMeeting.this, "Tarikh yang dipilih tidak sah", Toast.LENGTH_SHORT).show();
                     } else {
                         // Set the selected date to the EditText
                         String selectedDateStr = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;

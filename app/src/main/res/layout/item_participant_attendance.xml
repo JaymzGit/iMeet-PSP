@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@android:color/transparent"
     android:paddingBottom="12dp">
 
     <!-- Participant details -->
@@ -12,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:buttonTint="#FFFFFF"
+        android:buttonTint="#2E3192"
         android:checked="false"
         android:gravity="center"
         android:paddingStart="0dp"
@@ -21,15 +22,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="#FFFFFF"
+        android:background="@android:color/transparent"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_secondary"
+            android:background="@drawable/button_outline"
             android:orientation="horizontal"
             android:padding="4dp">
 
@@ -73,8 +73,8 @@
                         android:layout_weight="1"
                         android:drawableStart="@drawable/vector_person_18"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Name"
-                        android:textColor="#FFFFFF"
+                        android:text="Nama"
+                        android:textColor="#585BCA"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -90,8 +90,8 @@
                         android:layout_weight="1"
                         android:drawableStart="@drawable/vector_email_18"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text=" E-Mail"
-                        android:textColor="#FFFFFF"
+                        android:text=" E-Mel"
+                        android:textColor="#585BCA"
                         android:textSize="14sp" />
                 </LinearLayout>
 

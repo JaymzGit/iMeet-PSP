@@ -104,7 +104,7 @@ public class EditProfile extends AppCompatActivity {
                     } else if (result.getResultCode() == UCrop.RESULT_ERROR) {
                         Throwable cropError = UCrop.getError(result.getData());
                         Log.e("UCrop", "Crop error: ", cropError);
-                        Toast.makeText(EditProfile.this, "Error cropping image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfile.this, "Gagal memangkas imej", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -273,10 +273,10 @@ public class EditProfile extends AppCompatActivity {
                         // Redirect the user to the profile page after updates
                         startActivity(new Intent(getApplicationContext(), UserProfile.class));
                         finish();
-                        Toast.makeText(EditProfile.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfile.this, "Profil berjaya dikemaskini!", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("Error", task.getException().getMessage());
-                        Toast.makeText(EditProfile.this, "Failed to update your profile. Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfile.this, "Gagal mengemaskini profil. Sila cuba lagi.", Toast.LENGTH_SHORT).show();
                         btnUpdate.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -296,7 +296,7 @@ public class EditProfile extends AppCompatActivity {
                             })
                     )
                     .addOnFailureListener(e ->
-                            Toast.makeText(EditProfile.this, "An error occurred while uploading the image", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(EditProfile.this, "Gagal memuatnaik imej", Toast.LENGTH_SHORT).show()
                     );
         } else {
             Log.d("TAG", "Image URI is null, skipping upload");

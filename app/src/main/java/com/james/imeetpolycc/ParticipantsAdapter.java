@@ -1,5 +1,6 @@
 package com.james.imeetpolycc;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                         itemView.setBackgroundResource(R.drawable.button_selected);
                     } else {
                         selectedParticipants.remove(participant.getEmail()); // Remove unselected participant
-                        itemView.setBackgroundResource(R.drawable.button_secondary);
+                        itemView.setBackgroundResource(R.drawable.button_outline);
                     }
                 }
             });
@@ -115,7 +116,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                     .into(imageViewProfilePicture);
 
             // Set background based on selection state
-            itemView.setBackgroundResource(isChecked ? R.drawable.button_selected : R.drawable.button_secondary);
+            itemView.setBackgroundResource(isChecked ? R.drawable.button_selected : R.drawable.button_outline);
         }
     }
 }

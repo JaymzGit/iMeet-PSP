@@ -59,10 +59,10 @@ public class Login extends AppCompatActivity {
         tvRegister = findViewById(R.id.tvRegister);
 
         // Set up the "Register Now" text with a different color
-        String text = "Don’t have an account? Register Now";
+        String text = "Sudah mempunyai akaun? Log Masuk sekarang!";
         SpannableString spannableString = new SpannableString(text);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#CBAA8D"));
-        spannableString.setSpan(colorSpan, 23, 35, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#2E3192"));
+        spannableString.setSpan(colorSpan, 23, 41, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRegister.setText(spannableString);
 
         // Check if a user is already logged in
@@ -114,11 +114,11 @@ public class Login extends AppCompatActivity {
         // Authenticate user with Firebase
         fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(Login.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Berjaya log masuk.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
-                Log.d("Error", task.getException().getMessage());
-                Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                Log.d("Ralat", task.getException().getMessage());
+                Toast.makeText(Login.this, "Nama pengguna atau kata laluan tidak sah", Toast.LENGTH_SHORT).show();
                 btnLogin.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -127,6 +127,5 @@ public class Login extends AppCompatActivity {
 
     private void handleGoogleSignIn() {
         // TODO: Add sign-in with Google functionality
-        Toast.makeText(Login.this, "This feature is not available right now.", Toast.LENGTH_SHORT).show();
     }
 }

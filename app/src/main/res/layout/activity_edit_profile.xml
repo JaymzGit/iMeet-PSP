@@ -6,7 +6,7 @@
     android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="#F5F5F7"
     android:padding="16dp">
 
     <!-- Back button to navigate back to main screen -->
@@ -28,7 +28,7 @@
         android:id="@+id/imageViewProfile"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/circle_background"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
@@ -41,6 +41,8 @@
         app:layout_constraintVertical_bias="0.001" />
 
     <!-- ImageView with pencil vector art to indicate the profile picture is able to be updated -->
+
+    <!-- TextView to display signed in user's full name -->
     <ImageView
         android:id="@+id/imageEditProfile"
         android:layout_width="22dp"
@@ -52,12 +54,11 @@
         android:src="@drawable/vector_edit_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
+        app:layout_constraintVertical_bias="0.101" />
 
-    <!-- TextView to display signed in user's full name -->
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
@@ -66,7 +67,7 @@
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat_medium"
         android:text="John Doe"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.114" />
 
     <!-- TextView to display signed in user's registered email address -->
     <TextView
@@ -86,7 +87,7 @@
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"
         android:text="john.doe@example.com"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +106,7 @@
         android:layout_toEndOf="@id/imageViewProfile"
         android:fontFamily="@font/montserrat"
         android:text="+60123456789"
-        android:textColor="#FFFFFF"
+        android:textColor="#231F20"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +123,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your full name"
+        android:hint="Nama penuh"
         android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textSize="16sp"
@@ -139,7 +140,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your email address"
+        android:hint="E-mel"
         android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textSize="16sp"
@@ -178,7 +179,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your phone number"
+        android:hint="Nombor telefon mudah alih"
         android:inputType="phone"
         android:padding="14dp"
         android:textSize="16sp"
@@ -210,7 +211,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_rounded_bg"
             android:fontFamily="@font/montserrat"
-            android:hint="Enter your password for confirmation"
+            android:hint="Masukkan kata laluan untuk pengesahan"
             android:inputType="textPassword"
             android:padding="14dp"
             android:textSize="16sp"
@@ -224,7 +225,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
-        android:text="UPDATE DETAILS"
+        android:text="KEMASKINI BUTIRAN"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

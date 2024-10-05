@@ -129,7 +129,7 @@ public class SelectParticipants extends AppCompatActivity implements Participant
                             updateSelectedParticipantsCount();
                         }
                     } else {
-                        Toast.makeText(SelectParticipants.this, "Error fetching participants: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SelectParticipants.this, "Gagal mendapatkan butiran peserta " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -195,7 +195,7 @@ public class SelectParticipants extends AppCompatActivity implements Participant
 
     // Update the TextView with the current selected participants count
     private void updateSelectedParticipantsCount() {
-        String text = "Total Participants - " + allParticipants.size() + " | Selected Participants - " + selectedCount;
+        String text = "Jumlah: " + allParticipants.size() + " | Bilangan Peserta Terpilih: " + selectedCount;
         tvTotalParticipants.setText(text);
     }
 }

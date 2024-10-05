@@ -3,7 +3,7 @@
     <!-- Background circle -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="#CBAA8D"/>
+            <solid android:color="#2E3192"/>
         </shape>
     </item>
     <!-- Plus sign -->

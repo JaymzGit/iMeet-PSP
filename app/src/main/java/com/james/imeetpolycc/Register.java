@@ -70,10 +70,10 @@ public class Register extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         // Set up the "Register Now" text with a different color
-        String text = "Don’t have an account? Register Now";
+        String text = "Tiada Akaun? Cipta Akaun Baru";
         SpannableString spannableString = new SpannableString(text);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#CBAA8D"));
-        spannableString.setSpan(colorSpan, 23, 35, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#2E3192"));
+        spannableString.setSpan(colorSpan, 13, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvLogin.setText(spannableString);
 
         // Check if a user is logged in; if yes, redirect to MainActivity
@@ -137,7 +137,7 @@ public class Register extends AppCompatActivity {
             fAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Account registered successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Akaun berjaya didaftarkan.", Toast.LENGTH_SHORT).show();
 
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
@@ -154,10 +154,10 @@ public class Register extends AppCompatActivity {
                             // Handle errors
                             String errorMessage = task.getException().getMessage();
                             if (errorMessage != null && errorMessage.contains("The email address is already in use by another account.")) {
-                                Toast.makeText(Register.this, "This email is already registered. Please use a different email.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "E-mel ini telah pun didaftarkan. Sila gunakan e-mel lain.", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("Error", errorMessage);
-                                Toast.makeText(Register.this, "An error has occurred. Please try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Gagal mendaftarkan akaun. Sila cuba lagi", Toast.LENGTH_SHORT).show();
                             }
                             btnRegister.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
@@ -179,6 +179,5 @@ public class Register extends AppCompatActivity {
 
     private void handleGoogleRegister() {
         // TODO: Add sign-in with Google functionality
-        Toast.makeText(Register.this, "This feature is not available right now.", Toast.LENGTH_SHORT).show();
     }
 }

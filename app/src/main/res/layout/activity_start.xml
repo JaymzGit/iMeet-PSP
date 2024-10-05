@@ -6,52 +6,49 @@
     android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="#F5F5F7"
     android:padding="16dp">
 
-    <!-- Politeknik Seberang Perai Logo/Letterhead -->
-
-    <!-- TextView to display app name -->
+    <!-- POLYCC Logo/Letterhead -->
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="284dp"
         android:layout_height="47dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_heading" />
 
-    <!-- Vector/Icon -->
+    <!-- TextView to display app name -->
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:text="iMeet POLYCC"
-        android:textColor="#FFFFFF"
+        android:textColor="#2E3192"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145"
+        app:layout_constraintVertical_bias="0.159"
         tools:ignore="HardcodedText" />
 
-    <!-- Login button to allow existing users to log in -->
+    <!-- Vector/Icon -->
     <ImageView
         android:id="@+id/ivHomeScreen"
-        android:layout_width="322dp"
-        android:layout_height="341dp"
+        android:layout_width="410dp"
+        android:layout_height="357dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46"
         app:srcCompat="@drawable/app_homescreen_image" />
 
+    <!-- Login button to allow existing users to log in -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -59,14 +56,14 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
-        android:text="LOGIN"
+        android:text="LOG MASUK"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHomeScreen"
-        app:layout_constraintVertical_bias="0.145"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 
     <!-- Sign Up button to allow new users to register an account -->
@@ -77,8 +74,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_outline"
         android:fontFamily="@font/montserrat_medium"
-        android:text="SIGN UP"
-        android:textColor="#FFFFFF"
+        android:text="DAFTAR"
+        android:textColor="#2E3192"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,11 +89,12 @@
         android:id="@+id/tvCopyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Copyright © James Khor 2024. All Rights Reserved"
-        android:textColor="#FFFFFF"
+        android:text="Hak Cipta Terpelihara © 2024 James Khor"
+        android:textColor="#231F20"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"

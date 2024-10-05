@@ -71,7 +71,7 @@ public class MeetingNotificationWorker extends Worker {
         // Check if the meeting time is now or has passed
         if (isMeetingOngoing(meetingDate, meetingTime)) {
             Log.d("MeetingNotificationWorker", "Meeting is ongoing or past. Updating status...");
-            updateMeetingStatus(meetingId, "Ongoing");  // Update Firestore to mark the meeting as ongoing
+            updateMeetingStatus(meetingId, "Berlangsung");  // Update Firestore to mark the meeting as ongoing
         } else {
             sendNotification(meetingId, meetingTitle, meetingDate, meetingTime);
         }

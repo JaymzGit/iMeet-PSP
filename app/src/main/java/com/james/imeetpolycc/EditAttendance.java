@@ -163,7 +163,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
                                                 adapter.updateParticipants(allParticipants);
 
                                                 // Update the total participants text view
-                                                tvTotalParticipants.setText(String.format("Total Participants - %d\nAttending - %d | Not Attending - %d",
+                                                tvTotalParticipants.setText(String.format("Jumlah Peserta: %d | Hadir: %d | Tidak Hadir: %d",
                                                         allParticipants.size(), attendingCount, notAttendingCount));
                                             } else {
                                                 Log.d("EditAttendance", "Error fetching user documents: ", userTask.getException());
@@ -258,7 +258,7 @@ public class EditAttendance extends AppCompatActivity implements AttendanceAdapt
         this.attendingCount = attendingCount;
         this.notAttendingCount = notAttendingCount;
 
-        tvTotalParticipants.setText(String.format("Total Participants - %d \n Attending - %d | Not Attending - %d",
+        tvTotalParticipants.setText(String.format("Jumlah Peserta: %d | Hadir: %d | Tidak Hadir: %d",
                 allParticipants.size(), attendingCount, notAttendingCount));
     }
 }

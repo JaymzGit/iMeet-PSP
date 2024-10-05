@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="#FFFFFF"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     tools:layout_editor_absoluteX="16dp"
@@ -15,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/button_outline"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
@@ -59,8 +59,8 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/vector_person_18"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Name"
-                    android:textColor="#FFFFFF"
+                    android:text="Nama"
+                    android:textColor="#585BCA"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -76,8 +76,8 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/vector_email_18"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text=" E-Mail"
-                    android:textColor="#FFFFFF"
+                    android:text=" E-Mel"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
 

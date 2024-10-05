@@ -138,7 +138,7 @@ public class UserProfile extends AppCompatActivity {
                                                         // Participant successfully deleted
                                                     })
                                                     .addOnFailureListener(e -> {
-                                                        Toast.makeText(UserProfile.this, "Failed to delete participant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(UserProfile.this, "Gagal menghapuskan akaun: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                     });
                                             break; // Exit loop once the participant is found and removed
                                         }
@@ -146,7 +146,7 @@ public class UserProfile extends AppCompatActivity {
                                 }
                             }
                         } else {
-                            Toast.makeText(UserProfile.this, "Failed to retrieve meetings data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserProfile.this, "Gagal mendapatkan butiran mesyuarat" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -162,17 +162,17 @@ public class UserProfile extends AppCompatActivity {
                                     imageRef.delete().addOnSuccessListener(aVoid1 -> {
                                         // Image deleted successfully
                                     }).addOnFailureListener(e -> {
-                                        Toast.makeText(UserProfile.this, "Failed to delete user profile picture: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UserProfile.this, "Gagal menghapuskan gambar profil pengguna:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
                                 }
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(UserProfile.this, "Failed to delete user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserProfile.this, "Gagal menghapuskan data pengguna:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                         }
                     });
 
                     user.delete().addOnSuccessListener(aVoid -> {
-                        Toast.makeText(UserProfile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserProfile.this, "Berjaya menghapuskan akaun", Toast.LENGTH_SHORT).show();
                         fAuth.signOut();
                         startActivity(new Intent(getApplicationContext(), StartActivity.class));
                         finish();
@@ -242,7 +242,7 @@ public class UserProfile extends AppCompatActivity {
 
         // Fetch and display past meetings
         fStore.collection("meetings")
-                .whereEqualTo("status", "Ended")
+                .whereEqualTo("status", "Berakhir")
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         Log.e("Firestore", "Error fetching documents: ", error);

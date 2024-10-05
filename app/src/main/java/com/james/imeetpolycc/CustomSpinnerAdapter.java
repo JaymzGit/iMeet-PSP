@@ -22,7 +22,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
         TextView textView = view.findViewById(R.id.spinner_item_text);
-        textView.setTextColor(Color.WHITE); // Set the dropdown text color to white
+        textView.setTextColor(Color.parseColor("#585BCA")); // Set the selected item text color to #585BCA
         return view;
     }
 
@@ -30,7 +30,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         TextView textView = view.findViewById(R.id.spinner_item_text);
-        textView.setTextColor(Color.WHITE); // Set the selected item text color to white
+        textView.setTextColor(Color.parseColor("#585BCA")); // Set the selected item text color to #585BCA
         textView.setText(values[position]);
         return view;
     }

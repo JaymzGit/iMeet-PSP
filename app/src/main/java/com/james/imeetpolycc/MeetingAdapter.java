@@ -91,8 +91,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                                 // Retrieve the user's name from the document
                                 String organizerName = document.getString("fname");
                                 // Set the organizer's name in your UI using the final reference
-                                String limitedOrganizerName = organizerName.length() > 5 ? organizerName.substring(0, 5) + "..." : organizerName;
-                                tvOrganiserFinal.setText(" Organised by: " + limitedOrganizerName);
+                                String limitedOrganizerName = organizerName.length() > 11 ? organizerName.substring(0, 10) + "..." : organizerName;
+                                tvOrganiserFinal.setText(" Dianjurkan oleh: " + limitedOrganizerName);
 
                                 // Retrieve the user's imageUrl from the document
                                 String imageUrl = document.getString("imageUrl");
@@ -108,10 +108,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                         }
                     });
 
-            String limitMeetingName = meeting.getTitle().length() > 19 ? meeting.getTitle().substring(0, 19) + "..." : meeting.getTitle();
+            String limitMeetingName = meeting.getTitle().length() > 28 ? meeting.getTitle().substring(0, 27) + "..." : meeting.getTitle();
             tvMeetingTitle.setText(limitMeetingName);
-            tvMeetingDate.setText(" Date: " + meeting.getDate());
-            tvMeetingTime.setText(" Time: " + meeting.getTime());
+            tvMeetingDate.setText(" Tarikh: " + meeting.getDate());
+            tvMeetingTime.setText(" Masa: " + meeting.getTime());
             imageViewEdit.setVisibility(View.GONE);
 
             // Set the meeting status text

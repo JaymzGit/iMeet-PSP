@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardCornerRadius="8dp"
     app:cardElevation="20dp"
-    app:cardBackgroundColor="#CBAA8D"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:padding="16dp">
@@ -14,9 +13,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CBAA8D"
+        android:background="@drawable/button_outline"
         android:orientation="vertical"
-        app:cardCornerRadius="8dp"
         android:padding="16dp">
 
         <!-- Dialog Title -->
@@ -25,8 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Delete Meeting?"
-            android:textColor="#FFFFFF"
+            android:text="Hapuskan Mesyuarat?"
+            android:textColor="#585BCA"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -35,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="#FFFFFF" />
+            android:background="#231F20" />
 
         <!-- Dialog Message -->
         <TextView
@@ -45,11 +43,9 @@
             android:layout_gravity="left"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="This action cannot be undone"
-            android:textColor="#FFFFFF"
+            android:text="Tindakan ini tidak boleh diubah"
+            android:textColor="#585BCA"
             android:textSize="14sp" />
-
-        <!-- Divider Line Above Buttons -->
 
         <!-- Horizontal layout for buttons -->
         <LinearLayout
@@ -64,14 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
-                android:text="CANCEL"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:clickable="true"
-                android:focusable="true" />
+                android:text="BATAL"
+                android:textColor="#585BCA"
+                android:textSize="14sp" />
 
             <!-- Log Out Button -->
             <TextView
@@ -84,7 +80,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
-                android:text="DELETE"
+                android:text="HAPUS"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </LinearLayout>

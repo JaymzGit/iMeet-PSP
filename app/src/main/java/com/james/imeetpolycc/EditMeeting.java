@@ -94,7 +94,7 @@ public class EditMeeting extends AppCompatActivity {
             //TODO: Update text utils/error messages to better filter bad inputs
             // Check if any field is empty
             if (TextUtils.isEmpty(title) || TextUtils.isEmpty(date) || TextUtils.isEmpty(time)) {
-                Toast.makeText(EditMeeting.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditMeeting.this, "Sila pastikan semua butiran telah diisi", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -165,7 +165,7 @@ public class EditMeeting extends AppCompatActivity {
             // Update the UI to display the number of selected participants
             ArrayList<String> selectedParticipants = getSharedPreferencesData();
             int participantCount = selectedParticipants.size();
-            String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
+            String message = participantCount + " peserta terpilih";
             etParticipants.setText(message);
         }
     }
@@ -205,19 +205,19 @@ public class EditMeeting extends AppCompatActivity {
                         participantEmails.add(email);
                     }
                     int participantCount = participantEmails.size();
-                    String message = participantCount + (participantCount == 1 ? " participant selected" : " participants selected");
+                    String message = participantCount + " peserta terpilih";
                     etParticipants.setText(message);
 
                     // Save participants to SharedPreferences for auto-selection
                     saveParticipantsToSharedPreferences(participantEmails);
                 }
             } else {
-                Toast.makeText(EditMeeting.this, "Meeting not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditMeeting.this, "Mesyuarat tidak ditemui", Toast.LENGTH_SHORT).show();
                 finish(); // Close activity if meeting not found
             }
         }).addOnFailureListener(e -> {
             Log.e("Firestore", "Error loading meeting details", e);
-            Toast.makeText(EditMeeting.this, "Error loading meeting details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditMeeting.this, "Gagal mendapatkan butiran mesyuarat", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -252,7 +252,7 @@ public class EditMeeting extends AppCompatActivity {
 
             meetingRef.update(meetingData)
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(EditMeeting.this, "Meeting updated successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditMeeting.this, "Mesyuarat berjaya dikemaskini", Toast.LENGTH_SHORT).show();
                         // Clear input fields and SharedPreferences
                         etTitle.setText("");
                         etDate.setText("");
@@ -262,11 +262,11 @@ public class EditMeeting extends AppCompatActivity {
                         finish(); // Close activity after update
                     })
                     .addOnFailureListener(e -> {
-                        Toast.makeText(EditMeeting.this, "Failed to update meeting", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditMeeting.this, "Gagal kemaskini mesyuarat", Toast.LENGTH_SHORT).show();
                         Log.e("Firestore", "Error updating document", e);
                     });
         } else {
-            Toast.makeText(EditMeeting.this, "Please select meeting participants", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditMeeting.this, "Sila pilih peserta mesyuarat", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -275,11 +275,11 @@ public class EditMeeting extends AppCompatActivity {
 
         meetingRef.delete()
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(EditMeeting.this, "Meeting deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditMeeting.this, "Mesyuarat berjaya dihapuskan", Toast.LENGTH_SHORT).show();
                     finish(); // Close activity after deletion
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(EditMeeting.this, "Failed to delete meeting", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditMeeting.this, "Gagal menghapuskan mesyuarat", Toast.LENGTH_SHORT).show();
                     Log.e("Firestore", "Error deleting document", e);
                 });
     }
@@ -301,7 +301,7 @@ public class EditMeeting extends AppCompatActivity {
                     Calendar currentDate = Calendar.getInstance();
                     if (selectedDate.before(currentDate)) {
                         // Date is in the past, show a message
-                        Toast.makeText(EditMeeting.this, "Date is not valid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditMeeting.this, "Tarikh atau masa yang dipilih tidak sah", Toast.LENGTH_SHORT).show();
                     } else {
                         // Set the selected date to the EditText
                         String selectedDateStr = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;

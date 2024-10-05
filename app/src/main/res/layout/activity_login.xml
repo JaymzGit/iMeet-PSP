@@ -6,7 +6,7 @@
     android:id="@+id/loginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="#F5F5F7"
     android:padding="16dp">
 
     <!-- Back button to navigate back to main screen -->
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_outline"
+        android:background="@drawable/button_outline_grey"
         android:contentDescription="Back"
         android:padding="8dp"
         android:src="@drawable/vector_arrow_back_24"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
-    <!-- TextView to display "Welcome back" -->
+    <!-- TextView to display "Selamat kembali!" -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
@@ -31,8 +31,8 @@
         android:layout_marginTop="24dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="Welcome back! Glad to see you again!"
-        android:textColor="#FFFFFF"
+        android:text="Selamat kembali! Gembira dapat berjumpa lagi!"
+        android:textColor="#231F20"
         android:textSize="24sp"
         android:fontFamily="@font/montserrat"
         android:textStyle="bold"
@@ -50,7 +50,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/edittext_rounded_bg"
         android:fontFamily="@font/montserrat"
-        android:hint="Enter your email address"
+        android:hint="E-mel"
         android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textSize="16sp"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_rounded_bg"
             android:fontFamily="@font/montserrat"
-            android:hint="Enter your password"
+            android:hint="Kata Laluan"
             android:inputType="textPassword"
             android:padding="14dp"
             android:textSize="16sp"
@@ -92,8 +92,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="Forgot Password?"
-        android:textColor="#FFFFFF"
+        android:text="Terlupa Kata Laluan"
+        android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
-        android:text="LOGIN"
+        android:text="LOG MASUK"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +129,7 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/button_primary"
         android:fontFamily="@font/montserrat_medium"
-        android:text="LOGIN"
+        android:text="LOG MASUK"
         android:textColor="#FFFFFF"
         android:progressTint="@android:color/white"
         android:indeterminate="true"
@@ -162,7 +162,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#FFFFFF" />
+            android:background="#2E3192" />
 
         <TextView
             android:id="@+id/tvLoginOptions"
@@ -170,8 +170,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:padding="8dp"
-            android:text="Or Login with"
-            android:textColor="#FFFFFF"
+            android:text="Atau"
+            android:textColor="#2E3192"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -183,7 +183,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#FFFFFF" />
+            android:background="#2E3192" />
     </LinearLayout>
 
     <!-- Sign in with Google button -->
@@ -195,7 +195,7 @@
         android:background="@drawable/button_white"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:text="Sign in with Google"
+        android:text="Log Masuk dengan Google"
         android:textColor="#616161"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -211,11 +211,11 @@
         android:id="@+id/imageView"
         android:layout_width="34dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="276dp"
+        android:layout_marginEnd="304dp"
         app:layout_constraintBottom_toBottomOf="@+id/signInWithGoogle"
         app:layout_constraintEnd_toEndOf="@+id/signInWithGoogle"
         app:layout_constraintTop_toTopOf="@+id/signInWithGoogle"
-        app:layout_constraintVertical_bias="0.421"
+        app:layout_constraintVertical_bias="0.473"
         app:srcCompat="@drawable/google_icon" />
 
     <!-- TextView for "Don't have an account?" that redirects the user to Register page -->
@@ -225,8 +225,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:padding="8dp"
-        android:text="Don’t have an account? Register Now"
-        android:textColor="#FFFFFF"
+        android:text="Tiada Akaun? Cipta Akaun Baru"
+        android:textColor="#231F20"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

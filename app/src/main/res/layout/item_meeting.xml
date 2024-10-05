@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="8dp"
     android:background="#FFFFFF"
-    app:cardBackgroundColor="#CBAA8D"
+
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
     tools:layout_editor_absoluteX="16dp"
@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CBAA8D"
+        android:background="@drawable/button_outline"
         android:orientation="horizontal"
         android:padding="12dp">
 
@@ -43,8 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Meeting Title"
-                android:textColor="#FFFFFF"
+                android:text="Tajuk"
+                android:textColor="#585BCA"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -62,8 +62,8 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/vector_calendar_18"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text=" Meeting Date:"
-                    android:textColor="#FFFFFF"
+                    android:text=" Tarikh:"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -80,8 +80,8 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/vector_clock_18"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text=" Meeting Time:"
-                    android:textColor="#FFFFFF"
+                    android:text=" Masa:"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -98,8 +98,8 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/vector_account_18"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text=" Organised by:"
-                    android:textColor="#FFFFFF"
+                    android:text=" Dianjurkan oleh:"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -116,7 +116,7 @@
                     android:drawableStart="@drawable/vector_reload_18"
                     android:fontFamily="@font/montserrat_medium"
                     android:text=" Status:"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
                     android:text="@string/details"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#585BCA"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -145,6 +145,6 @@
             android:layout_gravity="top|end"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:src="@drawable/vector_edit_24" />
+            android:src="@drawable/vector_edit_blue" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
